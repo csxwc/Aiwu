@@ -10,7 +10,6 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private Integer id;
 
     private String username;
@@ -19,15 +18,27 @@ public class User {
 
     private String password;
 
-    private String userface;
+    private String sex;
 
-    //private List<Painting> houses = new ArrayList<Painting>();
+    private String phone;
 
-    public Integer getId() {
+    private String description;
+
+    private String identification;
+
+    private String birthday;
+
+    private String register_time;
+
+    private float money;
+
+    private int rent_num;
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -55,11 +66,67 @@ public class User {
         this.password = password;
     }
 
-    public String getUserface() {
-        return userface;
+    public String getSex() {
+        return sex;
     }
 
-    public void setUserface(String userface) {
-        this.userface = userface;
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getIdentification() {
+        return identification;
+    }
+
+    public void setIdentification(String identification) {
+        this.identification = identification;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getRegister_time() {
+        return register_time;
+    }
+
+    public void setRegister_time(String register_time) {
+        this.register_time = register_time;
+    }
+
+    public float getMoney() {
+        return money;
+    }
+
+    public void setMoney(float money) {
+        this.money = money;
+    }
+
+    public int getRent_num() {
+        return rent_num;
+    }
+
+    public void setRent_num(int rent_num) {
+        this.rent_num = rent_num;
     }
 }

@@ -1,7 +1,9 @@
 package com.aiwu.controller;
 
 
+import com.aiwu.repository.UserRepository;
 import com.aiwu.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController {
 
+    @Autowired
     private UserService userService;
 
     @RequestMapping("/t")
@@ -18,9 +21,9 @@ public class UserController {
     }
 
     @RequestMapping("/reg")
-    public String register(@RequestParam String username, String password) {
+    public String register(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
 
-        userService.insertNewUser(username, password);
+        userService.insertNewUser(username, email, password);
 
         return "register successfully.";
     }
