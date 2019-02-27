@@ -25,14 +25,10 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public User getByUserName(String username) {
+
         User user = userRepository.findByUsername(username);
-
-//        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-//        String pwdEncode = bCryptPasswordEncoder.encode(user.getPassword());
-//
-//        user.setPassword(pwdEncode);
-
         return user;
+
     }
 
     @Transactional
@@ -48,11 +44,8 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        System.out.println("查找用户：" + s);
+
         User user = getByUserName(s);
-
-        System.out.println("加密后密码：" + user.getPassword());
-
         if (user == null) {
             throw new UsernameNotFoundException("没有该用户");
         }
