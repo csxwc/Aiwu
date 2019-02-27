@@ -4,6 +4,8 @@ import com.aiwu.bean.User;
 import com.aiwu.bean.UserDetailsImpl;
 import com.aiwu.repository.UserRepository;
 import com.aiwu.utils.EmailTool;
+import com.aiwu.utils.RandomCodeTool;
+import com.aiwu.utils.TimeTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,6 +24,10 @@ public class UserService implements UserDetailsService {
     @Autowired
     private EmailTool emailTool = new EmailTool();
 
+    private TimeTool timeTool = new TimeTool();
+
+    private RandomCodeTool randomCodeTool = new RandomCodeTool();
+
     @Transactional
     public Iterable<User> getAllUsers() {
         return  userRepository.findAll();
@@ -33,6 +39,15 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByUsername(username);
         return user;
 
+    }
+
+    @Transactional
+    public String sendCheckCode(String email) {
+        String code = randomCodeTool.getRandomCode();
+        emailTool.sendCodeToEmail(email, code);
+        String currentTime = timeTool.getTime();
+
+        return code;
     }
 
     @Transactional
@@ -49,7 +64,6 @@ public class UserService implements UserDetailsService {
         // setid不加会报错
         user.setId(0);
 
-        emailTool.sendCodeToEmail(email);
         userRepository.save(user);
     }
 
