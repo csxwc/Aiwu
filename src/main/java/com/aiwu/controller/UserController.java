@@ -1,15 +1,15 @@
 package com.aiwu.controller;
 
 
-import com.aiwu.repository.UserRepository;
+import com.aiwu.bean.RespBean;
 import com.aiwu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -18,38 +18,49 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    private String codeJudger = null;
+
+    private String emailJudger = null;
+
     @RequestMapping("/t")
     public String test(HttpServletRequest request) {
         return "test:" + request.getSession().getAttribute("code");
     }
 
     @RequestMapping("/register/mail")
-    public String sendCode(@RequestParam String email, HttpServletRequest request) {
+    @ResponseBody
+    public RespBean sendCode(@RequestBody Map map, HttpServletRequest request) {
 
+        String email = map.get("email").toString();
         String code = userService.sendCheckCode(email);
-        System.out.println(code);
 
-        HttpSession session = request.getSession();
-        session.setAttribute("code", code);
-        session.setAttribute("email", email);
+        codeJudger = code;
+        emailJudger = email;
 
-        return "ok";
+        return new RespBean("success", "发送验证码成功");
     }
 
-    @RequestMapping(value = "/register")
-    public String register(@RequestParam String username, @RequestParam String email,
-                           @RequestParam String password, @RequestParam String code,
-                           HttpServletRequest request) {
+    @RequestMapping("/register")
+    @ResponseBody
+    public RespBean register(@RequestBody Map map, HttpServletRequest request) {
 
-        if (code.equals(request.getSession().getAttribute("code"))
-                && email.equals(request.getSession().getAttribute("email"))) {
+        String email = map.get("email").toString();
+        String code = map.get("code").toString();
+        String username = map.get("username").toString();
+        String password = map.get("password").toString();
+
+        System.out.println("codeJudger:" + codeJudger);
+        System.out.println("emailJudger:" + emailJudger);
+
+        if (code.equals(codeJudger) && email.equals(emailJudger)) {
 
             userService.insertNewUser(username, email, password);
-            return "register successfully.";
+            return new RespBean("success", "注册成功");
 
         } else {
-            return "error code or email.";
+            return new RespBean("error", "注册失败，错误的邮箱或验证码");
         }
+
     }
 
 }

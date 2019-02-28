@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 public class MainController {
 
-    @Autowired
-    private UserService userService;
-
     @RequestMapping("/")
     public String index() {
         return "index";

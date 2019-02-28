@@ -45,7 +45,6 @@ public class UserService implements UserDetailsService {
     public String sendCheckCode(String email) {
         String code = randomCodeTool.getRandomCode();
         emailTool.sendCodeToEmail(email, code);
-        String currentTime = timeTool.getTime();
 
         return code;
     }
