@@ -17,8 +17,10 @@ public interface HouseRepository extends CrudRepository<House, String>,JpaReposi
     // 官方文档 : https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.details
     House findAllById(String id);
     Page<House> findAllByCity(String city,Pageable pageable);
-    Page<House> findAllByBed(int bed,Pageable pageable);
-    Page<House> findAllByToilet(int toiet,Pageable pageable);
-    Page<House> findAllByGuest(int guest,Pageable pageable);
-    Page<House> findAllByType(String type,Pageable pageable);
+    Page<House> findAllByBedAndCity(int bed,String city,Pageable pageable);
+    Page<House> findAllByToiletAndCity(int toiet,String city,Pageable pageable);
+    Page<House> findAllByGuestAndCity(int guest,String city,Pageable pageable);
+    Page<House> findAllByTypeAndCity(String type,String city,Pageable pageable);
+    Page<House> findByCityAndRoom(String city,int room,Pageable pageable);
+
 }

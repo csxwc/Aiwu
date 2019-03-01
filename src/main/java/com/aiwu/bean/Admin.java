@@ -13,6 +13,28 @@ public class Admin {
     @Column(name = "phone")
     private String phone;
 
+    @Column(name = "adminname")
+    private String adminname;
+
+    @Column(name = "password")
+    private String password;
+
+    public String getAdminname() {
+        return adminname;
+    }
+
+    public void setAdminname(String adminname) {
+        this.adminname = adminname;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Integer getId() {
         return id;
     }

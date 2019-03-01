@@ -2,6 +2,7 @@ package com.aiwu.controller;
 
 
 import com.aiwu.bean.RespBean;
+import com.aiwu.repository.UserRepository;
 import com.aiwu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -17,6 +18,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     private String codeJudger = null;
 
@@ -39,6 +43,20 @@ public class UserController {
 
         return new RespBean("success", "发送验证码成功");
     }
+
+
+    @RequestMapping("/check")
+    @ResponseBody
+    public String check(@RequestBody Map map,HttpServletRequest request)
+    {
+        boolean istrue = userService.checkUser((String)map.get("username"),(String)map.get("password"),request);
+
+        if(istrue)
+            return "index";
+        else
+            return  "login error";
+    }
+
 
     @RequestMapping("/register")
     @ResponseBody

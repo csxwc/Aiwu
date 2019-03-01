@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 @Service
@@ -76,4 +77,24 @@ public class UserService implements UserDetailsService {
 
         return new UserDetailsImpl(user);
     }
+
+
+    @Transactional
+    public boolean checkUser(String name, String password, HttpServletRequest request)
+    {
+        if(userRepository.findByUsername(name)==null) {
+            return false;
+        }
+        User user  = userRepository.findByUsername(name);
+        if(user.getPassword().equals(password))
+        {
+            request.getSession().setAttribute("user",name);
+            return true;
+        }
+        else
+            return false;
+    }
+
+
+
 }
