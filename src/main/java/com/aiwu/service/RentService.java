@@ -174,7 +174,7 @@ public class RentService {
         {
             List<String> stringlist = new ArrayList<>();
             //housename,city,type,starttime,endtime
-            House ahouse = houseRepository.findAllById(have.get(i).getId());
+            House ahouse = houseRepository.findAllById(have.get(i).getRoom_id());
             stringlist.add(ahouse.getName());
             stringlist.add(ahouse.getCity());
             stringlist.add(ahouse.getType());
@@ -190,7 +190,6 @@ public class RentService {
     public List<List<String>> getnotuse(int personid) throws ParseException {
         List<List<String>> finallist = new ArrayList<>();
         List<Rent> all = getall(personid);
-        System.out.println("该人预定了"+all.size()+"房间");
         List<Rent> have = new ArrayList<Rent>() ;
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         for(int i=0;i<all.size();i++)
@@ -204,12 +203,11 @@ public class RentService {
                 have.add(all.get(i));
             }
         }
-        System.out.println("已完成了"+have.size()+"房间");
         for(int i=0;i<have.size();i++)
         {
             List<String> stringlist = new ArrayList<>();
             //housename,city,type,starttime,endtime
-            House ahouse = houseRepository.findAllById(have.get(i).getId());
+            House ahouse = houseRepository.findAllById(have.get(i).getRoom_id());
             stringlist.add(ahouse.getName());
             stringlist.add(ahouse.getCity());
             stringlist.add(ahouse.getType());
