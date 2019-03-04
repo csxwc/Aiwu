@@ -125,7 +125,37 @@ public class RentService {
     }
 
 
-
+    @Transactional
+    public List<List<String>> getnotuse(int personid) throws ParseException {
+        List<List<String>> finallist = new ArrayList<>();
+        List<Rent> all = getall(personid);
+        List<Rent> have = new ArrayList<Rent>() ;
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        for(int i=0;i<all.size();i++)
+        {
+            String str1 = sdf.format(new Date());
+            Date today = sdf.parse(str1);
+            String str2 = sdf.format(all.get(i).getEnd());
+            Date endday = sdf.parse(str2);
+            if(calc_days(today,endday)>=0)
+            {
+                have.add(all.get(i));
+            }
+        }
+        for(int i=0;i<have.size();i++)
+        {
+            List<String> stringlist = new ArrayList<>();
+            //housename,city,type,starttime,endtime
+            House ahouse = houseRepository.findAllById(have.get(i).getId());
+            stringlist.add(ahouse.getName());
+            stringlist.add(ahouse.getCity());
+            stringlist.add(ahouse.getType());
+            stringlist.add(sdf.format(have.get(i).getStart()));
+            stringlist.add(sdf.format(have.get(i).getEnd()));
+            finallist.add(stringlist);
+        }
+        return finallist;
+    }
 
 
 

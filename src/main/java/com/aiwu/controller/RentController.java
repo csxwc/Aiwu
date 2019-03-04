@@ -36,4 +36,12 @@ public class RentController {
         return str;
     }
 
+    @RequestMapping("/getnotused")
+    public String getnotused(@RequestParam Map map) throws ParseException {
+        List<List<String>> list = rentService.getnotuse((int)map.get("userid"));
+        Gson gson = new Gson();
+        String str = gson.toJson(list);
+        return str;
+    }
+
 }
