@@ -70,6 +70,9 @@ public class UserController {
         System.out.println("codeJudger:" + codeJudger);
         System.out.println("emailJudger:" + emailJudger);
 
+        if (userService.getByUserName(username) != null)
+            return new RespBean("error", "注册失败，用户名已被使用");
+
         if (code.equals(codeJudger) && email.equals(emailJudger)) {
 
             userService.insertNewUser(username, email, password, desc, date, gender);

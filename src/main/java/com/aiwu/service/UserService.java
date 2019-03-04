@@ -39,6 +39,11 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
+    public void deleteUserById(Integer id) { userRepository.deleteById(id); }
+
+    public User getUserById(Integer id) { return userRepository.findById(id).isPresent()? userRepository.findById(id).get() : null; }
+
+    @Transactional
     public User getByUserName(String username) {
 
         User user = userRepository.findByUsername(username);

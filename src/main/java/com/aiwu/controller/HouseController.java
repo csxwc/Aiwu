@@ -27,6 +27,9 @@ public class HouseController {
         return "index";
     }
 
-
+    @RequestMapping("/load")
+    public void loadData() {
+        houseService.loadData();
+    }
 
 }

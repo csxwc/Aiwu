@@ -1,11 +1,17 @@
 package com.aiwu.utils;
 
+import com.aiwu.bean.House;
+import com.aiwu.service.HouseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class HiveTool {
 
     private static String sql = "";
@@ -96,6 +102,9 @@ public class HiveTool {
      * @Date: 2019/3/1
      */
     private static Map<String, Object> toEntity(ResultSet rs) {
+
+        House house = new House();
+
         Map<String, Object>map = new HashMap<String, Object>();
         try {
             ResultSetMetaData data = (ResultSetMetaData) rs.getMetaData();//获取 运行sql的查询字段
@@ -104,10 +113,68 @@ public class HiveTool {
                 map.put(columnName, rs.getObject(columnName));
                 System.out.println(columnName + ":" +rs.getObject(columnName));
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return map;
+    }
+
+    private static House toHouse(ResultSet rs) {
+
+        House house = new House();
+
+        Map<String, Object>map = new HashMap<String, Object>();
+        try {
+            ResultSetMetaData data = (ResultSetMetaData) rs.getMetaData();//获取 运行sql的查询字段
+            for (int i = 1; i <= data.getColumnCount(); i++) {
+                String columnName = data.getColumnName(i);
+                map.put(columnName, rs.getObject(columnName));
+                System.out.println(columnName + ":" +rs.getObject(columnName));
+            }
+            house.setId((Integer) map.get("house.hid"));
+            house.setName((String) map.get("house.title"));
+            house.setProvince((String) map.get("house.province"));
+            house.setCity((String) map.get("house.city"));
+            house.setWeidu((String) map.get("house.weidu"));
+            house.setJingdu((String) map.get("house.jingdu"));
+            house.setType((String) map.get("house.type"));
+            house.setGuest((Integer) map.get("house.guest"));
+            house.setRoom((Integer) map.get("house.bedroom"));
+            house.setBed((Integer) map.get("house.bed"));
+            house.setToilet((Integer) map.get("house.bathroom"));
+            Double price = (Double) map.get("house.price");
+            house.setPrice(price.floatValue());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return house;
+    }
+
+    public static List<House> findHouseList(String sql , String...strings ){
+        List<House> list = new ArrayList<House>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        conn = HiveConnector.getConnection();
+        try {
+            pstmt = conn.prepareStatement(sql);
+            if(strings!=null){
+                for (int i = 0; i < strings.length; i++) {
+                    pstmt.setObject(i + 1, strings[i]);
+                }
+            }
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                list.add(toHouse(rs));//解析结果集
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            HiveConnector.closeConnection(conn);
+        }
+        return list;
     }
 
     /**
