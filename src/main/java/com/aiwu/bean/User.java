@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class User {
@@ -26,7 +27,7 @@ public class User {
 
     private String identification;
 
-    private String birthday;
+    private Date birthday;
 
     private String register_time;
 
@@ -98,11 +99,11 @@ public class User {
         this.identification = identification;
     }
 
-    public String getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(String birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 

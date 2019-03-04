@@ -5,11 +5,9 @@ import com.aiwu.bean.RespBean;
 import com.aiwu.repository.UserRepository;
 import com.aiwu.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @RestController
@@ -44,19 +42,17 @@ public class UserController {
         return new RespBean("success", "发送验证码成功");
     }
 
-
     @RequestMapping("/check")
     @ResponseBody
-    public String check(@RequestBody Map map,HttpServletRequest request)
+    public RespBean check(@RequestBody Map map)
     {
-        boolean istrue = userService.checkUser((String)map.get("username"),(String)map.get("password"),request);
+        boolean istrue = userService.checkUser((String)map.get("username"),(String)map.get("password"));
 
         if(istrue)
-            return "index";
+            return new RespBean("success", "登陆成功");
         else
-            return  "login error";
+            return new RespBean("fail", "登陆失败");
     }
-
 
     @RequestMapping("/register")
     @ResponseBody
@@ -66,13 +62,20 @@ public class UserController {
         String code = map.get("code").toString();
         String username = map.get("username").toString();
         String password = map.get("password").toString();
+        String desc = map.get("desc").toString();
+        String date = map.get("date").toString();
+        String gender = map.get("gender").toString();
 
+        System.out.println("gender:" + gender);
         System.out.println("codeJudger:" + codeJudger);
         System.out.println("emailJudger:" + emailJudger);
 
+        if (userService.getByUserName(username) != null)
+            return new RespBean("error", "注册失败，用户名已被使用");
+
         if (code.equals(codeJudger) && email.equals(emailJudger)) {
 
-            userService.insertNewUser(username, email, password);
+            userService.insertNewUser(username, email, password, desc, date, gender);
             return new RespBean("success", "注册成功");
 
         } else {

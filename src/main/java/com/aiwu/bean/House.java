@@ -9,7 +9,6 @@ import javax.persistence.*;
 public class House {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Integer id;
 

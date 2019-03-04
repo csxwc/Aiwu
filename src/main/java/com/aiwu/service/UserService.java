@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -29,10 +31,17 @@ public class UserService implements UserDetailsService {
 
     private RandomCodeTool randomCodeTool = new RandomCodeTool();
 
+    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
     @Transactional
     public Iterable<User> getAllUsers() {
         return  userRepository.findAll();
     }
+
+    @Transactional
+    public void deleteUserById(Integer id) { userRepository.deleteById(id); }
+
+    public User getUserById(Integer id) { return userRepository.findById(id).isPresent()? userRepository.findById(id).get() : null; }
 
     @Transactional
     public User getByUserName(String username) {
@@ -47,18 +56,28 @@ public class UserService implements UserDetailsService {
         String code = randomCodeTool.getRandomCode();
         emailTool.sendCodeToEmail(email, code);
 
+        System.out.println(email);
+        System.out.println(code);
         return code;
     }
 
     @Transactional
-    public void insertNewUser(String username, String email, String password) {
+    public void insertNewUser(String username, String email, String password, String desc, String date, String gender) {
         User user = new User();
         user.setUsername(username);
         user.setEmail(email);
         // 密码加密
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         String pwdEncode = bCryptPasswordEncoder.encode(password);
         user.setPassword(pwdEncode);
+        user.setDescription(desc);
+        date = date.replace("T16:00:00.000Z", "");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            user.setBirthday(format.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        user.setSex(gender);
         user.setMoney(0);
         user.setRent_num(0);
         // setid不加会报错
@@ -80,15 +99,15 @@ public class UserService implements UserDetailsService {
 
 
     @Transactional
-    public boolean checkUser(String name, String password, HttpServletRequest request)
+    public boolean checkUser(String name, String password)
     {
         if(userRepository.findByUsername(name)==null) {
             return false;
         }
         User user  = userRepository.findByUsername(name);
-        if(user.getPassword().equals(password))
+        if(bCryptPasswordEncoder.matches(password, user.getPassword()))
         {
-            request.getSession().setAttribute("user",name);
+            //request.getSession().setAttribute("user",name);
             return true;
         }
         else

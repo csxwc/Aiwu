@@ -1,7 +1,6 @@
 package com.aiwu.controller;
 
 import com.aiwu.bean.House;
-import com.aiwu.repository.HouseRepository;
 import com.aiwu.service.HouseService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,10 @@ public class HouseController {
         return str;
     }
 
-
+    @RequestMapping("/load")
+    public void loadData() {
+        houseService.loadData();
+    }
 
 
 

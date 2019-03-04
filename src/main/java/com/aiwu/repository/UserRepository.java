@@ -14,4 +14,5 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     // 按id逆序返回users
     List<User> findByUsernameOrderByIdDesc(String name);
+
 }

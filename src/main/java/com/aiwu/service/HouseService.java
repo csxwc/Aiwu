@@ -2,6 +2,7 @@ package com.aiwu.service;
 
 import com.aiwu.bean.House;
 import com.aiwu.repository.HouseRepository;
+import com.aiwu.utils.HiveTool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,7 +10,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.beans.Transient;
 import java.util.*;
 
 @Service
@@ -17,6 +17,9 @@ public class HouseService {
 
     @Autowired
     private HouseRepository houseRepository;
+
+    @Autowired
+    private HiveTool hiveTool;
 
     @Transactional
     public void InsertHosue(House house)
@@ -28,6 +31,16 @@ public class HouseService {
     public void DeleteHouse(String id)
     {
         houseRepository.deleteById(id);
+    }
+
+    public List<House> findAllHouses() { return houseRepository.findAll(); }
+
+    @Transactional
+    public void loadData() {
+        List<House> houses = hiveTool.findHouseList("select * from house");
+        while(!houses.isEmpty()) {
+            houseRepository.save(houses.remove(0));
+        }
     }
 
     @Transactional
