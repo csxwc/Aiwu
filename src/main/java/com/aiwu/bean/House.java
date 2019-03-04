@@ -1,5 +1,7 @@
 package com.aiwu.bean;
 
+import org.springframework.stereotype.Controller;
+
 import javax.persistence.*;
 
 @Entity
@@ -50,7 +52,17 @@ public class House {
     @Column(name = "price")
     private float price;
 
+    @Column(name = "booktime")
+    private int booktime;
 
+
+    public int getBooktime() {
+        return booktime;
+    }
+
+    public void setBooktime(int booktime) {
+        this.booktime = booktime;
+    }
 
     public void setId(Integer id) {
         this.id = id;

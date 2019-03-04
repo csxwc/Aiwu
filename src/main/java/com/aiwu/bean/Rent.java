@@ -17,11 +17,27 @@ public class Rent {
     @Column(name = "end")
     private Date end;
 
+    public Rent(Date start, Date end, Integer room_id, Integer person_id) {
+        this.start = start;
+        this.end = end;
+        this.roomid = room_id;
+        this.personid = person_id;
+        score = 0;
+        remark = "";
+    }
+
+    public Rent()
+    {
+
+    }
+
+
     @Column(name = "room_id")
-    private Integer room_id;
+
+    private Integer roomid;
 
     @Column(name = "person_id")
-    private Integer person_id;
+    private Integer personid;
 
     @Column(name = "score")
     private float score;
@@ -54,19 +70,19 @@ public class Rent {
     }
 
     public Integer getRoom_id() {
-        return room_id;
+        return roomid;
     }
 
     public void setRoom_id(Integer room_id) {
-        this.room_id = room_id;
+        this.roomid = room_id;
     }
 
     public Integer getPerson_id() {
-        return person_id;
+        return personid;
     }
 
     public void setPerson_id(Integer person_id) {
-        this.person_id = person_id;
+        this.personid = person_id;
     }
 
     public float getScore() {

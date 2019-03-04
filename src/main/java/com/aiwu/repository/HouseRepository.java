@@ -15,12 +15,13 @@ public interface HouseRepository extends CrudRepository<House, String>,JpaReposi
 
     // 关于spring data repository : https://blog.csdn.net/youngsend/article/details/51832581
     // 官方文档 : https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.details
-    House findAllById(String id);
+    House findAllById(int id);
     Page<House> findAllByCity(String city,Pageable pageable);
     Page<House> findAllByBedAndCity(int bed,String city,Pageable pageable);
     Page<House> findAllByToiletAndCity(int toiet,String city,Pageable pageable);
     Page<House> findAllByGuestAndCity(int guest,String city,Pageable pageable);
     Page<House> findAllByTypeAndCity(String type,String city,Pageable pageable);
     Page<House> findByCityAndRoom(String city,int room,Pageable pageable);
+
 
 }

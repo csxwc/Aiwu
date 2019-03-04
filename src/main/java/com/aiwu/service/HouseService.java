@@ -92,7 +92,7 @@ public class HouseService {
     }
 
     @Transactional
-    public String getName(String id)
+    public String getName(int id)
     {
         return houseRepository.findAllById(id).getName();
     }
@@ -456,9 +456,6 @@ public class HouseService {
         return  ancity;
     }
 
-
-
-
     public List<House> getsame(List<House> alist,List<House> blist)//alist为主要
     {
         List<House> finallist = new ArrayList<House>();
@@ -476,5 +473,10 @@ public class HouseService {
                 finallist.add(alist.get(i));
         }
         return finallist;
+
+
+
+
     }
+
 }
