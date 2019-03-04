@@ -93,9 +93,70 @@ public class RentService {
     }
 
     @Transactional
-    public List<List<String>> gethaveuse(int personid) throws ParseException {
-        List<List<String>> finallist = new ArrayList<>();
-        List<Rent> all = getall(personid);
+    public List<Rent> getAllByRoomId(int roomid)
+    {
+        Pageable pageable = new Pageable() {
+            @Override
+            public int getPageNumber() {
+                return 10;
+            }
+
+            @Override
+            public int getPageSize() {
+                return 10;
+            }
+
+            @Override
+            public long getOffset() {
+                return 0;
+            }
+
+            @Override
+            public Sort getSort() {
+                Sort sort = new Sort(Sort.Direction.DESC, "start");
+                return sort;
+            }
+
+            @Override
+            public Pageable next() {
+                return null;
+            }
+
+            @Override
+            public Pageable previousOrFirst() {
+                return null;
+            }
+
+            @Override
+            public Pageable first() {
+                return null;
+            }
+
+            @Override
+            public boolean hasPrevious() {
+                return false;
+            }
+        };
+        List<Rent> rentList = new ArrayList<Rent>();
+
+        try {
+            Page<Rent> pages = rentRepository.findAllByRoomid(roomid,pageable);
+            Iterator<Rent> it = pages.iterator();
+
+            while (it.hasNext()) {
+                rentList.add(((Rent) it.next()));
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rentList;
+    }
+
+
+    @Transactional
+    public List<Map<String,String>> gethaveuse(int personid) throws ParseException {
+        List<Map<String,String>> finallist = new ArrayList<>();
+        List<Rent> all = getall(personid);//输出该用户预定过的所有房间
         List<Rent> have = new ArrayList<Rent>() ;
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         for(int i=0;i<all.size();i++)
@@ -109,16 +170,23 @@ public class RentService {
                 have.add(all.get(i));
             }
         }
+        //have数组中存放着所有已经使用过的房间（Rent类型）
         for(int i=0;i<have.size();i++)
         {
-            List<String> stringlist = new ArrayList<>();
+            Map<String,String> stringlist = new HashMap<>();
             //housename,city,type,starttime,endtime
-            House ahouse = houseRepository.findAllById(have.get(i).getId());
-            stringlist.add(ahouse.getName());
-            stringlist.add(ahouse.getCity());
-            stringlist.add(ahouse.getType());
-            stringlist.add(sdf.format(have.get(i).getStart()));
-            stringlist.add(sdf.format(have.get(i).getEnd()));
+            House ahouse = houseRepository.findAllById(have.get(i).getRoom_id());
+//            stringlist.add(ahouse.getName());
+//            stringlist.add(ahouse.getCity());
+//            stringlist.add(ahouse.getType());
+//            stringlist.add(sdf.format(have.get(i).getStart()));
+//            stringlist.add(sdf.format(have.get(i).getEnd()));
+//            finallist.add(stringlist);
+            stringlist.put("housename",ahouse.getName());
+            stringlist.put("city",ahouse.getCity());
+            stringlist.put("type",ahouse.getType());
+            stringlist.put("starttime",sdf.format(have.get(i).getStart()));
+            stringlist.put("endtime",sdf.format(have.get(i).getEnd()));
             finallist.add(stringlist);
         }
         return finallist;
@@ -126,9 +194,11 @@ public class RentService {
 
 
     @Transactional
-    public List<List<String>> getnotuse(int personid) throws ParseException {
-        List<List<String>> finallist = new ArrayList<>();
-        List<Rent> all = getall(personid);
+    public List<Map<String,String>> getnotuse(int personid) throws ParseException {
+        System.out.println("==================================");
+        List<Map<String,String>> finallist = new ArrayList<>();
+        List<Rent> all = getall(personid);//输出该用户预定过的所有房间
+        System.out.println("该用户预定了这么多间房间"+all.size());
         List<Rent> have = new ArrayList<Rent>() ;
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         for(int i=0;i<all.size();i++)
@@ -142,20 +212,47 @@ public class RentService {
                 have.add(all.get(i));
             }
         }
+        System.out.println("还没有使用"+have.size());
+        //have数组中存放着所有已经使用过的房间（Rent类型）
         for(int i=0;i<have.size();i++)
         {
-            List<String> stringlist = new ArrayList<>();
+            Map<String,String> stringlist = new HashMap<>();
             //housename,city,type,starttime,endtime
-            House ahouse = houseRepository.findAllById(have.get(i).getId());
-            stringlist.add(ahouse.getName());
-            stringlist.add(ahouse.getCity());
-            stringlist.add(ahouse.getType());
-            stringlist.add(sdf.format(have.get(i).getStart()));
-            stringlist.add(sdf.format(have.get(i).getEnd()));
+            House ahouse = houseRepository.findAllById(have.get(i).getRoom_id());
+//            stringlist.add(ahouse.getName());
+//            stringlist.add(ahouse.getCity());
+//            stringlist.add(ahouse.getType());
+//            stringlist.add(sdf.format(have.get(i).getStart()));
+//            stringlist.add(sdf.format(have.get(i).getEnd()));
+//            finallist.add(stringlist);
+            stringlist.put("housename",ahouse.getName());
+            stringlist.put("city",ahouse.getCity());
+            stringlist.put("type",ahouse.getType());
+            stringlist.put("starttime",sdf.format(have.get(i).getStart()));
+            stringlist.put("endtime",sdf.format(have.get(i).getEnd()));
             finallist.add(stringlist);
         }
         return finallist;
     }
+
+
+    @Transactional
+    public List<Map<String,String>> getusedate(int roomid)
+    {
+        List<Map<String,String>> finallist = new ArrayList<>();
+        List<Rent> rooms = getAllByRoomId(roomid);
+        System.out.println(rooms.size());
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        for(int i=0;i<rooms.size();i++)
+        {
+            Map<String,String> amap = new HashMap<>();
+            amap.put("结束日期",sdf.format(rooms.get(i).getEnd()));
+            amap.put("起始日期",sdf.format(rooms.get(i).getStart()));
+            finallist.add(amap);
+        }
+        return finallist;
+    }
+
 
 
 

@@ -16,4 +16,6 @@ public interface RentRepository extends CrudRepository<Rent, String>,JpaReposito
     Page<Rent> findAllById(int id, Pageable pageable);
 
     Page<Rent> findAllByPersonid(int id,Pageable pageable);
+
+    Page<Rent> findAllByRoomid(int id,Pageable pageable);
 }

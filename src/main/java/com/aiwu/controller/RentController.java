@@ -30,7 +30,7 @@ public class RentController {
 
     @RequestMapping("/getused")
     public String getused(@RequestParam Map map) throws ParseException {
-        List<List<String>> list = rentService.gethaveuse((int)map.get("userid"));
+        List<Map<String,String>> list = rentService.gethaveuse((int)map.get("userid"));
         Gson gson = new Gson();
         String str = gson.toJson(list);
         return str;
@@ -38,9 +38,22 @@ public class RentController {
 
     @RequestMapping("/getnotused")
     public String getnotused(@RequestParam Map map) throws ParseException {
-        List<List<String>> list = rentService.getnotuse((int)map.get("userid"));
+        List<Map<String,String>> list = rentService.getnotuse((int)map.get("userid"));
         Gson gson = new Gson();
         String str = gson.toJson(list);
+        System.out.println(str);
+        return str;
+    }
+
+    @RequestMapping("/getusedate")
+    public String getusedate(Integer roomid)
+    {
+        List<Map<String,String>> list = rentService.getusedate(1);
+        Gson gson = new Gson();
+        String str = gson.toJson(list);
+        System.out.println("=========================");
+        System.out.println(str);
+        System.out.println("=========================");
         return str;
     }
 
