@@ -170,7 +170,7 @@ public class HiveTool {
 //        }
         //System.out.println(findList("select sum(pid) from city where city like '%台%'"));
         //System.out.println(findListByEqual("city", "cid", "9"));
-        System.out.println(findOne("select * from house"));
+        System.out.println(findList("select * from house"));
 
     }
 
