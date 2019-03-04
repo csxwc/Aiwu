@@ -93,6 +93,67 @@ public class RentService {
     }
 
     @Transactional
+    public List<Rent> getAllByRoomId(int roomid)
+    {
+        Pageable pageable = new Pageable() {
+            @Override
+            public int getPageNumber() {
+                return 10;
+            }
+
+            @Override
+            public int getPageSize() {
+                return 10;
+            }
+
+            @Override
+            public long getOffset() {
+                return 0;
+            }
+
+            @Override
+            public Sort getSort() {
+                Sort sort = new Sort(Sort.Direction.DESC, "start");
+                return sort;
+            }
+
+            @Override
+            public Pageable next() {
+                return null;
+            }
+
+            @Override
+            public Pageable previousOrFirst() {
+                return null;
+            }
+
+            @Override
+            public Pageable first() {
+                return null;
+            }
+
+            @Override
+            public boolean hasPrevious() {
+                return false;
+            }
+        };
+        List<Rent> rentList = new ArrayList<Rent>();
+
+        try {
+            Page<Rent> pages = rentRepository.findAllByRoomid(roomid,pageable);
+            Iterator<Rent> it = pages.iterator();
+
+            while (it.hasNext()) {
+                rentList.add(((Rent) it.next()));
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rentList;
+    }
+
+
+    @Transactional
     public List<List<String>> gethaveuse(int personid) throws ParseException {
         List<List<String>> finallist = new ArrayList<>();
         List<Rent> all = getall(personid);
@@ -156,6 +217,25 @@ public class RentService {
         }
         return finallist;
     }
+
+
+    @Transactional
+    public List<Map<String,String>> getusedate(int roomid)
+    {
+        List<Map<String,String>> finallist = new ArrayList<>();
+        List<Rent> rooms = getAllByRoomId(roomid);
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        for(int i=0;i<rooms.size();i++)
+        {
+            Map<String,String> amap = new HashMap<>();
+            amap.put("结束日期",sdf.format(rooms.get(i).getEnd()));
+            amap.put("起始日期",sdf.format(rooms.get(i).getStart()));
+
+            finallist.add(amap);
+        }
+        return finallist;
+    }
+
 
 
 

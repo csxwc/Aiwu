@@ -44,4 +44,16 @@ public class RentController {
         return str;
     }
 
+    @RequestMapping("/getusedate")
+    public String getusedate()
+    {
+        List<Map<String,String>> list = rentService.getusedate(1);
+        Gson gson = new Gson();
+        String str = gson.toJson(list);
+        System.out.println("=========================");
+        System.out.println(str);
+        System.out.println("=========================");
+        return str;
+    }
+
 }
