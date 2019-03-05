@@ -156,63 +156,10 @@ public class HouseService {
         List<House> ancity = findByCity(city);
         System.out.print("按城市搜索结果：");
         System.out.println(ancity.size());
-        Pageable pageable = null;
 
         if(type!=null)
         {
-            pageable = new Pageable() {
-                @Override
-                public int getPageNumber() {
-                    return 10;
-                }
-
-                @Override
-                public int getPageSize() {
-                    return 10;
-                }
-
-                @Override
-                public long getOffset() {
-                    return 0;
-                }
-
-                @Override
-                public Sort getSort() {
-                    Sort sort = new Sort(Sort.Direction.DESC, "city");
-                    return sort;
-                }
-
-                @Override
-                public Pageable next() {
-                    return null;
-                }
-
-                @Override
-                public Pageable previousOrFirst() {
-                    return null;
-                }
-
-                @Override
-                public Pageable first() {
-                    return null;
-                }
-
-                @Override
-                public boolean hasPrevious() {
-                    return false;
-                }
-            };
-            List<House> houseList = new ArrayList<House>();
-            try {
-                Page<House> pages = houseRepository.findAllByTypeAndCity(type,city,pageable);
-                Iterator<House> it = pages.iterator();
-
-                while (it.hasNext()) {
-                    houseList.add(((House) it.next()));
-                }
-            }catch (Exception e) {
-                e.printStackTrace();
-            }
+            List<House> houseList = houseRepository.findAllByTypeAndCity(type,city);
             ancity = getsame(ancity,houseList);
 
             System.out.print("按类型搜索结果：");
@@ -220,59 +167,9 @@ public class HouseService {
         }
         if(guest!=-1)
         {
-            pageable = new Pageable() {
-                @Override
-                public int getPageNumber() {
-                    return 10;
-                }
 
-                @Override
-                public int getPageSize() {
-                    return 10;
-                }
+            List<House> houseList = houseRepository.findAllByGuestAndCity(guest,city);
 
-                @Override
-                public long getOffset() {
-                    return 0;
-                }
-
-                @Override
-                public Sort getSort() {
-                    Sort sort = new Sort(Sort.Direction.DESC, "city");
-                    return sort;
-                }
-
-                @Override
-                public Pageable next() {
-                    return null;
-                }
-
-                @Override
-                public Pageable previousOrFirst() {
-                    return null;
-                }
-
-                @Override
-                public Pageable first() {
-                    return null;
-                }
-
-                @Override
-                public boolean hasPrevious() {
-                    return false;
-                }
-            };
-            List<House> houseList = new ArrayList<House>();
-            try {
-                Page<House> pages = houseRepository.findAllByGuestAndCity(guest,city,pageable);
-                Iterator<House> it = pages.iterator();
-
-                while (it.hasNext()) {
-                    houseList.add(((House) it.next()));
-                }
-            }catch (Exception e) {
-                e.printStackTrace();
-            }
             ancity = getsame(ancity,houseList);
 
             System.out.print("按客人搜索结果：");
@@ -280,59 +177,9 @@ public class HouseService {
         }
         if(bedroom!=-1)
         {
-            pageable = new Pageable() {
-                @Override
-                public int getPageNumber() {
-                    return 10;
-                }
 
-                @Override
-                public int getPageSize() {
-                    return 10;
-                }
+            List<House> houseList = houseRepository.findByCityAndRoom(city,bedroom);
 
-                @Override
-                public long getOffset() {
-                    return 0;
-                }
-
-                @Override
-                public Sort getSort() {
-                    Sort sort = new Sort(Sort.Direction.DESC, "city");
-                    return sort;
-                }
-
-                @Override
-                public Pageable next() {
-                    return null;
-                }
-
-                @Override
-                public Pageable previousOrFirst() {
-                    return null;
-                }
-
-                @Override
-                public Pageable first() {
-                    return null;
-                }
-
-                @Override
-                public boolean hasPrevious() {
-                    return false;
-                }
-            };
-            List<House> houseList = new ArrayList<House>();
-            try {
-                Page<House> pages = houseRepository.findByCityAndRoom(city,bedroom,pageable);
-                Iterator<House> it = pages.iterator();
-
-                while (it.hasNext()) {
-                    houseList.add(((House) it.next()));
-                }
-            }catch (Exception e) {
-                e.printStackTrace();
-            }
             ancity = getsame(ancity,houseList);
 
             System.out.print("按卧室数搜索结果：");
@@ -340,59 +187,8 @@ public class HouseService {
         }
         if(bed!=-1)
         {
-            pageable = new Pageable() {
-                @Override
-                public int getPageNumber() {
-                    return 10;
-                }
 
-                @Override
-                public int getPageSize() {
-                    return 10;
-                }
-
-                @Override
-                public long getOffset() {
-                    return 0;
-                }
-
-                @Override
-                public Sort getSort() {
-                    Sort sort = new Sort(Sort.Direction.DESC, "city");
-                    return sort;
-                }
-
-                @Override
-                public Pageable next() {
-                    return null;
-                }
-
-                @Override
-                public Pageable previousOrFirst() {
-                    return null;
-                }
-
-                @Override
-                public Pageable first() {
-                    return null;
-                }
-
-                @Override
-                public boolean hasPrevious() {
-                    return false;
-                }
-            };
-            List<House> houseList = new ArrayList<House>();
-            try {
-                Page<House> pages = houseRepository.findAllByBedAndCity(bed,city,pageable);
-                Iterator<House> it = pages.iterator();
-
-                while (it.hasNext()) {
-                    houseList.add(((House) it.next()));
-                }
-            }catch (Exception e) {
-                e.printStackTrace();
-            }
+            List<House> houseList = houseRepository.findAllByBedAndCity(bed,city);
             ancity = getsame(ancity,houseList);
 
             System.out.print("按床位数搜索结果：");
@@ -400,59 +196,9 @@ public class HouseService {
         }
         if(toilet!=-1)
         {
-            pageable = new Pageable() {
-                @Override
-                public int getPageNumber() {
-                    return 10;
-                }
 
-                @Override
-                public int getPageSize() {
-                    return 10;
-                }
+            List<House> houseList = houseRepository.findAllByToiletAndCity(toilet,city);
 
-                @Override
-                public long getOffset() {
-                    return 0;
-                }
-
-                @Override
-                public Sort getSort() {
-                    Sort sort = new Sort(Sort.Direction.DESC, "city");
-                    return sort;
-                }
-
-                @Override
-                public Pageable next() {
-                    return null;
-                }
-
-                @Override
-                public Pageable previousOrFirst() {
-                    return null;
-                }
-
-                @Override
-                public Pageable first() {
-                    return null;
-                }
-
-                @Override
-                public boolean hasPrevious() {
-                    return false;
-                }
-            };
-            List<House> houseList = new ArrayList<House>();
-            try {
-                Page<House> pages = houseRepository.findAllByToiletAndCity(toilet,city,pageable);
-                Iterator<House> it = pages.iterator();
-
-                while (it.hasNext()) {
-                    houseList.add(((House) it.next()));
-                }
-            }catch (Exception e) {
-                e.printStackTrace();
-            }
             ancity = getsame(ancity,houseList);
 
             System.out.print("按卫生间搜索结果：");

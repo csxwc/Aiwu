@@ -54,7 +54,28 @@ public class House {
     @Column(name = "booktime")
     private int booktime;
 
+    public House(String jingdu, String weidu, String name, String province, String city, String type, Integer guest, Integer room, Integer bed, Integer toilet, String introduction, String picture, float price) {
+        this.id = 12332;
+        this.jingdu = jingdu;
+        this.weidu = weidu;
+        this.name = name;
+        this.province = province;
+        this.city = city;
+        this.type = type;
+        this.guest = guest;
+        this.room = room;
+        this.bed = bed;
+        this.toilet = toilet;
+        this.introduction = introduction;
+        this.picture = picture;
+        this.price = price;
+        this.booktime = 0;
+    }
 
+    public House()
+    {
+
+    }
     public int getBooktime() {
         return booktime;
     }

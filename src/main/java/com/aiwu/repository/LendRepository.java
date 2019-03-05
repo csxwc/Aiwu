@@ -11,5 +11,5 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface LendRepository extends CrudRepository<Lend, String>,JpaRepository<Lend, String>,PagingAndSortingRepository<Lend,String>,JpaSpecificationExecutor<Lend> {
 
-    Page<Lend> findAllByPersonId(String personid, Pageable pageable);
+    Page<Lend> findAllByPersonId(int personid, Pageable pageable);
 }

@@ -17,6 +17,11 @@ public class Lend {
     @Column(name = "room_id")
     private Integer roomId;
 
+    public Lend(Integer personId, Integer roomId) {
+        this.personId = personId;
+        this.roomId = roomId;
+    }
+
     public Integer getId() {
         return id;
     }

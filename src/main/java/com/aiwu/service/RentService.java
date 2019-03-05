@@ -27,7 +27,9 @@ public class RentService {
     @Transactional
     public void rent(int houseid,int userid,Date startdate,Date enddate) throws ParseException {
         Rent r = new Rent(startdate,enddate,houseid,userid);
-
+        House h = houseRepository.findAllById(houseid);
+        h.setBooktime(h.getBooktime()+1);
+        houseRepository.save(h);
         rentRepository.save(r);
 
     }
