@@ -152,6 +152,59 @@ public class HiveTool {
         return house;
     }
 
+    private static Integer toHouseId(ResultSet rs) {
+
+        Integer houseId = null;
+
+        Map<String, Object>map = new HashMap<String, Object>();
+        try {
+            ResultSetMetaData data = (ResultSetMetaData) rs.getMetaData();//获取 运行sql的查询字段
+            for (int i = 1; i <= data.getColumnCount(); i++) {
+                String columnName = data.getColumnName(i);
+                map.put(columnName, rs.getObject(columnName));
+                System.out.println(columnName + ":" +rs.getObject(columnName));
+            }
+            houseId = (Integer) map.get("house.hid");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return houseId;
+    }
+
+    /** 
+     * @Description: 返回查到的houseid
+     * @Param: [sql, strings] 
+     * @return: java.util.List<java.lang.Integer> 
+     * @Author: congregalis 
+     * @Date: 2019/3/5 
+     */
+    public static List<Integer> findHouseIdList(String sql, String...strings) {
+
+        List<Integer> list = new ArrayList<Integer>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        conn = HiveConnector.getConnection();
+        try {
+            pstmt = conn.prepareStatement(sql);
+            if(strings!=null){
+                for (int i = 0; i < strings.length; i++) {
+                    pstmt.setObject(i + 1, strings[i]);
+                }
+            }
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                list.add(toHouseId(rs));//解析结果集
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            HiveConnector.closeConnection(conn);
+        }
+        return list;
+        
+    }
+    
     public static List<House> findHouseList(String sql , String...strings ){
         List<House> list = new ArrayList<House>();
         Connection conn = null;
@@ -237,7 +290,7 @@ public class HiveTool {
 //        }
         //System.out.println(findList("select sum(pid) from city where city like '%台%'"));
         //System.out.println(findListByEqual("city", "cid", "9"));
-        System.out.println(findList("select * from house"));
+        System.out.println(findHouseIdList("select * from house"));
 
     }
 

@@ -46,10 +46,10 @@ public class UserController {
     @ResponseBody
     public RespBean check(@RequestBody Map map)
     {
-        boolean istrue = userService.checkUser((String)map.get("username"),(String)map.get("password"));
+         Integer userId = userService.checkUser((String)map.get("email"),(String)map.get("password"));
 
-        if(istrue)
-            return new RespBean("success", "登陆成功");
+        if(userId != -1)
+            return new RespBean("success", userId.toString());
         else
             return new RespBean("fail", "登陆失败");
     }

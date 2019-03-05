@@ -13,10 +13,10 @@ public class Collection {
     private Integer id;
 
     @Column(name = "person_id")
-    private Integer person_id;
+    private Integer personId;
 
     @Column(name = "room_id")
-    private Integer room_id;
+    private Integer roomId;
 
 
     public Integer getId() {
@@ -28,18 +28,18 @@ public class Collection {
     }
 
     public Integer getPerson_id() {
-        return person_id;
+        return personId;
     }
 
     public void setPerson_id(Integer person_id) {
-        this.person_id = person_id;
+        this.personId = person_id;
     }
 
     public Integer getRoom_id() {
-        return room_id;
+        return roomId;
     }
 
     public void setRoom_id(Integer room_id) {
-        this.room_id = room_id;
+        this.roomId = room_id;
     }
 }

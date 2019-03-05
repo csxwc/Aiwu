@@ -15,7 +15,6 @@ public class CorsConfig {
         corsConfiguration.addAllowedHeader("*"); // 允许任何头
         corsConfiguration.addAllowedMethod("*"); // 允许任何方法（post、get等）
         corsConfiguration.setAllowCredentials(true); // 设置证书
-        System.out.println("CorsConfig加载成功");
         return corsConfiguration;
     }
 

@@ -35,6 +35,8 @@ public class HouseService {
 
     public List<House> findAllHouses() { return houseRepository.findAll(); }
 
+    public House findById(Integer id) { return houseRepository.findAllById(id); }
+
     @Transactional
     public void loadData() {
         List<House> houses = hiveTool.findHouseList("select * from house");

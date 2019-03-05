@@ -48,7 +48,6 @@ public class UserService implements UserDetailsService {
 
         User user = userRepository.findByUsername(username);
         return user;
-
     }
 
     @Transactional
@@ -99,19 +98,19 @@ public class UserService implements UserDetailsService {
 
 
     @Transactional
-    public boolean checkUser(String name, String password)
+    public Integer checkUser(String email, String password)
     {
-        if(userRepository.findByUsername(name)==null) {
-            return false;
+        if(userRepository.findByEmail(email) == null) {
+            return -1;
         }
-        User user  = userRepository.findByUsername(name);
+        User user  = userRepository.findByEmail(email);
         if(bCryptPasswordEncoder.matches(password, user.getPassword()))
         {
             //request.getSession().setAttribute("user",name);
-            return true;
+            return user.getId();
         }
         else
-            return false;
+            return -1;
     }
 
 
