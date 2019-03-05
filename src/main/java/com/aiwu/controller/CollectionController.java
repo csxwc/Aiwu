@@ -4,7 +4,7 @@ import com.aiwu.bean.Collection;
 import com.aiwu.bean.RespBean;
 import com.aiwu.service.CollectionService;
 import com.google.gson.Gson;
-import org.apache.calcite.rel.core.Collect;
+//import org.apache.calcite.rel.core.Collect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

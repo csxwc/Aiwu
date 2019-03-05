@@ -48,60 +48,7 @@ public class HouseService {
     @Transactional
     public List<House> findByCity(String city)
     {
-        Pageable pageable = new Pageable() {
-            @Override
-            public int getPageNumber() {
-                return 10;
-            }
-
-            @Override
-            public int getPageSize() {
-                return 10;
-            }
-
-            @Override
-            public long getOffset() {
-                return 0;
-            }
-
-            @Override
-            public Sort getSort() {
-                Sort sort = new Sort(Sort.Direction.DESC, "city");
-                return sort;
-            }
-
-            @Override
-            public Pageable next() {
-                return null;
-            }
-
-            @Override
-            public Pageable previousOrFirst() {
-                return null;
-            }
-
-            @Override
-            public Pageable first() {
-                return null;
-            }
-
-            @Override
-            public boolean hasPrevious() {
-                return false;
-            }
-        };
-        List<House> houseList = new ArrayList<House>();
-
-        try {
-           Page<House> pages = houseRepository.findAllByCity(city,pageable);
-            Iterator<House> it = pages.iterator();
-
-            while (it.hasNext()) {
-                houseList.add(((House) it.next()));
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
+        List<House> houseList = houseRepository.findAllByCity(city);
         return houseList;
 
     }

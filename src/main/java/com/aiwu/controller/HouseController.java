@@ -1,6 +1,7 @@
 package com.aiwu.controller;
 
 import com.aiwu.bean.House;
+import com.aiwu.repository.HouseRepository;
 import com.aiwu.service.HouseService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class HouseController {
 
     @Autowired
     private HouseService houseService;
+    @Autowired
+    private HouseRepository houseRepository;
 
     @RequestMapping("/find")
     public String findcity(@RequestParam Map map)
@@ -29,6 +32,8 @@ public class HouseController {
         String str = gson.toJson(list);
         return str;
     }
+
+
 
     @RequestMapping("/load")
     public void loadData() {
