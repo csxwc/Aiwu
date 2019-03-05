@@ -12,6 +12,8 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     User findByUsername(String name);
 
+    User findByEmail(String email);
+
     // 按id逆序返回users
     List<User> findByUsernameOrderByIdDesc(String name);
 
