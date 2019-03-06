@@ -1,6 +1,7 @@
 package com.aiwu.controller;
 
 import com.aiwu.bean.House;
+import com.aiwu.bean.Picture;
 import com.aiwu.repository.HouseRepository;
 import com.aiwu.repository.PictureRepository;
 import com.aiwu.service.HouseService;
@@ -27,15 +28,14 @@ public class HouseController {
     @Autowired
     private PictureRepository pictureRepository;
 
-//    @RequestMapping("/find")
-//    public String findcity(@RequestParam Map map)
-//    {
-//        List<House> list = houseService.choose((String)map.get("city"),(String)map.get("type"),(int)map.get("guest"),(int)map.get("bedroom"),(int)map.get("bed"),(int)map.get("toilet"),(int)map.get("minprice"),(int)map.get("maxprice") );
-//
-//        Gson gson = new Gson();
-//        String str = gson.toJson(list);
-//        return str;
-//    }
+    @RequestMapping("/test")
+    public void findcity123(@RequestParam Map map)
+    {
+        List<Picture> list = pictureRepository.findAllByHouseid(15706670);
+        for(int i=0;i<list.size();i++)
+            System.out.println(list.get(i).getPicture());
+
+    }
 
     @RequestMapping("/find")
     public String findcity(@RequestBody Map map)

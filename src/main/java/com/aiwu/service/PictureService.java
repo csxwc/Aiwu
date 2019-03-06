@@ -1,5 +1,6 @@
 package com.aiwu.service;
 
+import com.aiwu.bean.Picture;
 import com.aiwu.repository.PictureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,13 +18,17 @@ public class PictureService {
     public List<Map<String,String>> getlittlepictures(int houseid)
     {
         List<Map<String,String>> finallist = new ArrayList<>();
-        List<String> all = pictureRepository.findAllByHouseid(houseid);
+        List<Picture> all = pictureRepository.findAllByHouseid(houseid);
+        for(int i=0;i<all.size();i++)
+        {
+            System.out.println(all.get(i).getPicture());
+        }
         if(all.size()>5)
         {
             for(int i=0;i<5;i++)
             {
                 Map<String,String> amap = new HashMap<>();
-                amap.put(String.valueOf(i),all.get(i));
+                amap.put(String.valueOf(i),all.get(i).getPicture());
             }
         }
         return finallist;

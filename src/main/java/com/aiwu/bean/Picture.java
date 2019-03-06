@@ -14,7 +14,7 @@ public class Picture {
     @Column(name = "houseid")
     private Integer houseid;
 
-    @Column(name = "pictrue")
+    @Column(name = "picture")
     private String picture;
 
     public Integer getId() {
