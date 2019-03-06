@@ -30,4 +30,6 @@ public interface HouseRepository extends CrudRepository<House, String>,JpaReposi
     List<House> findAllByGuestAndCity(int guest,String city);
     List<House> findAllByTypeAndCity(String type,String city);
     List<House> findByCityAndRoom(String city,int room);
+    List<House> findAllByProvince(String province);
+    List<House> findAll();
 }
