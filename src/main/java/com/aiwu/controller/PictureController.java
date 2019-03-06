@@ -21,9 +21,9 @@ public class PictureController {
     private PictureService pictureService;
 
     @RequestMapping("/getlittle")
-    public String getlittle()
+    public String getlittle(@RequestBody Map map)
     {
-        List<Map<String,String>> list = pictureService.getlittlepictures(2779901);
+        List<Map<String,String>> list = pictureService.getlittlepictures((int)map.get("houseid"));
         Gson gson = new Gson();
         String str = gson.toJson(list);
         return str;

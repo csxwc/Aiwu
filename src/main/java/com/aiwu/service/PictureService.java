@@ -29,6 +29,16 @@ public class PictureService {
             {
                 Map<String,String> amap = new HashMap<>();
                 amap.put(String.valueOf(i),all.get(i).getPicture());
+                finallist.add(amap);
+            }
+        }
+        else
+        {
+            for(int i=0;i<all.size();i++)
+            {
+                Map<String,String> amap = new HashMap<>();
+                amap.put(String.valueOf(i),all.get(i).getPicture());
+                finallist.add(amap);
             }
         }
         return finallist;

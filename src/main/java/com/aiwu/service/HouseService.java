@@ -164,6 +164,9 @@ public class HouseService {
         return  ancity;
     }
 
+
+
+
     public List<House> getsame(List<House> alist,List<House> blist)//alist为主要
     {
         List<House> finallist = new ArrayList<House>();

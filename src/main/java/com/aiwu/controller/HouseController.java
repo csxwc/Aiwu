@@ -28,15 +28,6 @@ public class HouseController {
     @Autowired
     private PictureRepository pictureRepository;
 
-    @RequestMapping("/test")
-    public void findcity123(@RequestParam Map map)
-    {
-        List<Picture> list = pictureRepository.findAllByHouseid(15706670);
-        for(int i=0;i<list.size();i++)
-            System.out.println(list.get(i).getPicture());
-
-    }
-
     @RequestMapping("/find")
     public String findcity(@RequestBody Map map)
     {
@@ -117,6 +108,16 @@ public class HouseController {
             houseRepository.save(h);
         }
 
+    }
+
+
+    @RequestMapping("/getallinfo")
+    public void getallinfo()
+    {
+        House house = houseRepository.findAllById(280746);
+        Gson gson = new Gson();
+        String str = gson.toJson(house);
+        System.out.println(str);
     }
 
 
