@@ -15,20 +15,20 @@ public class PictureService {
     private PictureRepository pictureRepository;
 
     @Transactional
-    public List<Map<String,String>> getlittlepictures(int houseid)
+    public List<List<String>> getlittlepictures(int houseid)
     {
-        List<Map<String,String>> finallist = new ArrayList<>();
+        List<List<String>> finallist = new ArrayList<>();
         List<Picture> all = pictureRepository.findAllByHouseid(houseid);
         for(int i=0;i<all.size();i++)
         {
             System.out.println(all.get(i).getPicture());
         }
-        if(all.size()>5)
+        if(all.size()>8)
         {
-            for(int i=0;i<5;i++)
+            for(int i=0;i<8;i++)
             {
-                Map<String,String> amap = new HashMap<>();
-                amap.put(String.valueOf(i),all.get(i).getPicture());
+                List<String> amap = new ArrayList<>();
+                amap.add(all.get(i).getPicture());
                 finallist.add(amap);
             }
         }
@@ -38,9 +38,11 @@ public class PictureService {
             {
                 Map<String,String> amap = new HashMap<>();
                 amap.put(String.valueOf(i),all.get(i).getPicture());
-                finallist.add(amap);
+                // finallist.add(amap);
             }
         }
+
         return finallist;
     }
+
 }

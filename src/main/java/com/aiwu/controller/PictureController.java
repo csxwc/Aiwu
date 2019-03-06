@@ -23,7 +23,7 @@ public class PictureController {
     @RequestMapping("/getlittle")
     public String getlittle(@RequestBody Map map)
     {
-        List<Map<String,String>> list = pictureService.getlittlepictures((int)map.get("houseid"));
+        List<List<String>> list = pictureService.getlittlepictures((int)map.get("houseid"));
         Gson gson = new Gson();
         String str = gson.toJson(list);
         return str;

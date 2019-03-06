@@ -31,7 +31,7 @@ public class HouseController {
     @RequestMapping("/find")
     public String findcity(@RequestBody Map map)
     {
-        List<House> list = houseService.choose((String)map.get("city"),(String)map.get("city"),(int)map.get("guest"),(int)map.get("bedroom"),(int)map.get("bed"),(int)map.get("toilet"),(int)map.get("minprice"),(int)map.get("maxprice") );
+        List<House> list = houseService.choose((String)map.get("city"),(String)map.get("type"),(int)map.get("guest"),(int)map.get("bedroom"),(int)map.get("bed"),(int)map.get("toilet"),(int)map.get("minprice"),(int)map.get("maxprice") );
 
         Gson gson = new Gson();
         String str = gson.toJson(list);
