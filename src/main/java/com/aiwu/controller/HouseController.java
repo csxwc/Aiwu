@@ -98,13 +98,14 @@ public class HouseController {
 //        }
 //        System.out.println(6);
         List<House> l = houseRepository.findAll();
-        for (int i=0;i<l.size();i++)
-        {
-            System.out.println(i);
-            House h = l.get(i);
-            h.setBooktime((int)(Math.random()*100));
-            houseRepository.save(h);
-        }
+        System.out.println(l.size());
+//        for (int i=0;i<l.size();i++)
+//        {
+//            System.out.println(i);
+//            House h = l.get(i);
+//            h.setBooktime((int)(Math.random()*100));
+//            houseRepository.save(h);
+//        }
 
     }
 

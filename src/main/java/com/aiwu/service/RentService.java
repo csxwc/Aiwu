@@ -37,60 +37,7 @@ public class RentService {
     @Transactional
     public List<Rent> getall(int id)
     {
-        Pageable pageable = new Pageable() {
-            @Override
-            public int getPageNumber() {
-                return 10;
-            }
-
-            @Override
-            public int getPageSize() {
-                return 10;
-            }
-
-            @Override
-            public long getOffset() {
-                return 0;
-            }
-
-            @Override
-            public Sort getSort() {
-                Sort sort = new Sort(Sort.Direction.DESC, "start");
-                return sort;
-            }
-
-            @Override
-            public Pageable next() {
-                return null;
-            }
-
-            @Override
-            public Pageable previousOrFirst() {
-                return null;
-            }
-
-            @Override
-            public Pageable first() {
-                return null;
-            }
-
-            @Override
-            public boolean hasPrevious() {
-                return false;
-            }
-        };
-        List<Rent> rentList = new ArrayList<Rent>();
-
-        try {
-            Page<Rent> pages = rentRepository.findAllByPersonid(id,pageable);
-            Iterator<Rent> it = pages.iterator();
-
-            while (it.hasNext()) {
-                rentList.add(((Rent) it.next()));
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
+        List<Rent> rentList = rentRepository.findAllByPersonid(id);
         return rentList;
     }
 
@@ -244,7 +191,7 @@ public class RentService {
         List<Map<String,String>> finallist = new ArrayList<>();
         List<Rent> rooms = getAllByRoomId(roomid);
         System.out.println(rooms.size());
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd");
         for(int i=0;i<rooms.size();i++)
         {
             Map<String,String> amap = new HashMap<>();

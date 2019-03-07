@@ -17,4 +17,5 @@ public interface PictureRepository extends CrudRepository<Picture, String>,JpaRe
     // 关于spring data repository : https://blog.csdn.net/youngsend/article/details/51832581
     // 官方文档 : https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.details
     List<Picture> findAllByHouseid(int houseid);
+
 }

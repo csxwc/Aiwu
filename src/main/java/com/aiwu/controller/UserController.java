@@ -2,12 +2,15 @@ package com.aiwu.controller;
 
 
 import com.aiwu.bean.RespBean;
+import com.aiwu.bean.User;
 import com.aiwu.repository.UserRepository;
 import com.aiwu.service.UserService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -52,6 +55,16 @@ public class UserController {
             return new RespBean("success", userId.toString());
         else
             return new RespBean("fail", "登陆失败");
+    }
+
+    @RequestMapping("/getuserinfo")
+    public void getuserinfo()
+    {
+        User u  =userService.getuserinfo(1);
+        Gson gson = new Gson();
+        String str = gson.toJson(u);
+        System.out.println(str);
+
     }
 
     @RequestMapping("/register")

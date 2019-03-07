@@ -4,7 +4,7 @@ import com.aiwu.bean.House;
 import com.aiwu.repository.HouseRepository;
 import com.aiwu.utils.HiveTool;
 import com.aiwu.utils.StatisticsTool;
-import org.apache.hadoop.hive.ql.metadata.Hive;
+//import org.apache.hadoop.hive.ql.metadata.Hive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
