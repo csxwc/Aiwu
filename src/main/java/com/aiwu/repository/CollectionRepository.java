@@ -1,6 +1,7 @@
 package com.aiwu.repository;
 
 import com.aiwu.bean.Collection;
+import javolution.io.Struct;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
@@ -14,6 +15,8 @@ public interface CollectionRepository extends CrudRepository<Collection, String>
     // 官方文档 : https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.details
 
     List<Collection> findAllByPersonId(int personId);
+
+    Collection findByPersonIdAndRoomId(int personId, int roomId);
 
     int deleteById(Integer id);
 }

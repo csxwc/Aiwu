@@ -1,14 +1,11 @@
 package com.aiwu.controller;
 
-import com.aiwu.bean.Collection;
 import com.aiwu.bean.RespBean;
 import com.aiwu.service.CollectionService;
 import com.google.gson.Gson;
-//import org.apache.calcite.rel.core.Collect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -25,6 +22,13 @@ public class CollectionController {
         String collections = gson.toJson(collectionService.getCollectionsByUserId(userId));
         System.out.println(collections);
         return collections;
+    }
+
+    @RequestMapping("/iscollected")
+    public Boolean isCollected(@RequestParam Integer uid, @RequestParam Integer hid) {
+
+        //return collectionService.isCollected((Integer)map.get("user_id"), (Integer)map.get("house_id"));
+        return collectionService.isCollected(uid, hid);
     }
 
     @RequestMapping("/add")

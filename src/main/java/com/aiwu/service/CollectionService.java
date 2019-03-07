@@ -22,7 +22,6 @@ public class CollectionService {
     private HouseService houseService;
 
     public List<Map<String, Object>> getCollectionsByUserId(Integer userId) {
-        collectionRepository.findAllByPersonId(userId);
         List<Map<String, Object>> finallist = new ArrayList<>();
         List<Collection> collections = collectionRepository.findAllByPersonId(userId);
         for(int i = 0; i < collections.size(); i++)
@@ -40,6 +39,16 @@ public class CollectionService {
             finallist.add(map);
         }
         return finallist;
+    }
+
+    public Boolean isCollected(Integer userId, Integer houseId) {
+
+        Collection collection = collectionRepository.findByPersonIdAndRoomId(userId, houseId);
+        if (collection == null)
+            return false;
+        else
+            return true;
+
     }
 
     public void addCollection(Integer personId, Integer roomId) {

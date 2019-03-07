@@ -67,6 +67,7 @@ public class HadoopTool {
             logger.info("上传文件成功："+fileName);
         } catch (Exception e) {
             logger.error("上传文件失败"+e.getMessage());
+            System.out.println("上传文件失败");
         }
     }
 
@@ -129,7 +130,7 @@ public class HadoopTool {
 
     public static void main(String[] args) {
 
-        deleteFile("/bkg_5.jpg");
+        uploadFile("/home/hong/Downloads/", "actionList.txt", "/input/");
 
     }
 }

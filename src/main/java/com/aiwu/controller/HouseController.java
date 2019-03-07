@@ -41,8 +41,6 @@ public class HouseController {
 
 
 
-
-
     @RequestMapping("/load")
     public void loadData() {
         houseService.loadData();
