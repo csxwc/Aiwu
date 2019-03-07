@@ -5,13 +5,15 @@ import com.aiwu.service.HouseService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/house")
 public class HouseController {
 
@@ -20,7 +22,7 @@ public class HouseController {
     private HouseService houseService;
 
     @RequestMapping("/find")
-    public String findcity(@RequestParam Map map)
+    public String findcity(@RequestBody Map map)
     {
         List<House> list = houseService.choose((String)map.get("city"),(String)map.get("type"),(int)map.get("guest"),(int)map.get("bedroom"),(int)map.get("bed"),(int)map.get("toilet"),(int)map.get("minprice"),(int)map.get("maxprice") );
 

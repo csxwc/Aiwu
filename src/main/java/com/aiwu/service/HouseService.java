@@ -3,6 +3,8 @@ package com.aiwu.service;
 import com.aiwu.bean.House;
 import com.aiwu.repository.HouseRepository;
 import com.aiwu.utils.HiveTool;
+import com.aiwu.utils.StatisticsTool;
+import org.apache.hadoop.hive.ql.metadata.Hive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -493,6 +495,120 @@ public class HouseService {
     }
 
 
+    public Integer intelligentSelect(String city, float priceWeight, float heatWeight, float sizeWeight, float comfortable, String...strings) {
+
+        StringBuffer match = new StringBuffer();
+        match.append("select hid from house where city = '" + city + "'");
+        //match.append(selectByPriceweight(city, priceWeight));
+        match.append(selectByHeatweight(heatWeight));
+        match.append(selectBySizeWeight(sizeWeight));
+        match.append(selectByComfortable(comfortable));
+
+        for (int i = 0; i < strings.length; i++) {
+            match.append("and desc like '%" + strings[i] + "%'");
+        }
+        System.out.println(match);
+        System.out.println(HiveTool.findHouseIdList(match.toString()));
+        return null;
+    }
+
+    public String selectByComfortable(float comfortable) {
+        int minus = 0;
+
+        if (comfortable <= 0.25) {
+            return null;
+        } else if (comfortable <= 0.5) {
+            minus = 5;
+        } else if (comfortable <= 0.75) {
+            minus = 2;
+        } else {
+            minus = 1;
+        }
+
+        return " and guest-bed < " + minus;
+
+    }
+
+    /**
+     * 独立房间、合住房间、整
+     * @param sizeWeight
+     * @return
+     */
+    public String selectBySizeWeight(float sizeWeight) {
+        String word = null;
+
+        if (sizeWeight <= 0.25)
+            word = "整%' or type like '%独立房间%' or type like '%合住房间";
+        else if (sizeWeight <= 0.5)
+            word = "整%' or type like '%独立房间";
+        else if (sizeWeight <= 0.75)
+            word = "整";
+        else
+            return "";
+
+        return " and (type like '%" + word + "%')";
+    }
+
+
+    public String selectByHeatweight(float heatWeight) {
+        int min,max;
+
+        if (heatWeight <= 0.25) {
+            min = 0;
+            max = 25;
+        } else if (heatWeight <= 0.5) {
+            min = 26;
+            max = 50;
+        } else if (heatWeight <= 0.75) {
+            min = 51;
+            max = 75;
+        } else {
+            min = 76;
+            max = 100;
+        }
+
+        return " and booktime between " + min + " and " + max;
+    }
+
+
+    /**
+     * 根据价格权重筛选
+     * 价格权重越高，对价格越看重，价格区间更窄，价格更低
+     * @param city
+     * @param priceWeight
+     * @return sql语句中的一段
+     */
+    public String selectByPriceweight(String city, float priceWeight) {
+
+        float realmin = 0;
+        float realmax = 0;
+
+        float avg = StatisticsTool.countAvgByCity(city);
+        float max = StatisticsTool.countMaxByCity(city);
+        float min = StatisticsTool.countminByCity(city);
+        float maxavg = StatisticsTool.countAvgBetweenByCity(city, avg, max);
+        float minavg = StatisticsTool.countAvgBetweenByCity(city, min, avg);
+        float reference = (float) (minavg + (maxavg - minavg) * 0.5);
+        float center = (float) minavg + (maxavg - minavg) * (1 - priceWeight);
+
+        float maxrange = max - min;
+        float realrange = (float) maxrange * (1 - priceWeight);
+        realrange *= 0.5;
+        if (100 < realrange) realrange = 100;
+
+        if (center < reference) {
+            realmax = center + realrange / 2 < maxavg ? center + realrange / 2 : maxavg;
+            realmin = center - (realrange - (realmax - center));
+            if (realmin < min) realmin = min;
+        } else {
+            realmin = center - realrange / 2 > minavg ? center - realrange / 2 : minavg;
+            realmax = center + (realrange - (center - realmin));
+
+        }
+
+        return "and price between " + realmin + " and " + realmax;
+
+    }
 
 
 }
