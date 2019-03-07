@@ -61,6 +61,7 @@ public class RentController {
         System.out.println("=========================");
         System.out.println(str);
         System.out.println("=========================");
+        System.out.println("12312");
         return str;
     }
 
