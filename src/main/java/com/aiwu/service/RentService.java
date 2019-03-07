@@ -186,17 +186,17 @@ public class RentService {
 
 
     @Transactional
-    public List<Map<String,Date>> getusedate(int roomid)
+    public List<Map<String,String>> getusedate(int roomid)
     {
-        List<Map<String,Date>> finallist = new ArrayList<>();
+        List<Map<String,String>> finallist = new ArrayList<>();
         List<Rent> rooms = getAllByRoomId(roomid);
         System.out.println(rooms.size());
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd");
         for(int i=0;i<rooms.size();i++)
         {
-            Map<String,Date> amap = new HashMap<>();
-            amap.put("结束日期",rooms.get(i).getEnd());
-            amap.put("起始日期",rooms.get(i).getStart());
+            Map<String,String> amap = new HashMap<>();
+            amap.put("结束日期",sdf.format(rooms.get(i).getEnd()));
+            amap.put("起始日期",sdf.format(rooms.get(i).getStart()));
             finallist.add(amap);
         }
         return finallist;
