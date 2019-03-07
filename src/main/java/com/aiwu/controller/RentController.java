@@ -54,7 +54,7 @@ public class RentController {
     @RequestMapping("/getusedate")
     public String getusedate(@RequestBody Map map)
     {
-        List<Map<String,String>> list = rentService.getusedate((int)map.get("userid"));
+        List<Map<String,String>> list = rentService.getusedate((int)map.get("houseid"));
         Gson gson = new Gson();
         String str = gson.toJson(list);
         System.out.println("=========================");
