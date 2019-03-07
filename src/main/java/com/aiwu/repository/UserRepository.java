@@ -11,7 +11,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     // 官方文档 : https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.details
 
     User findByUsername(String name);
-
+    User findAllById(int id);
     User findByEmail(String email);
 
     // 按id逆序返回users

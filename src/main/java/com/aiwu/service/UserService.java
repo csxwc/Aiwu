@@ -12,11 +12,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -113,7 +118,26 @@ public class UserService implements UserDetailsService {
             return -1;
     }
 
-//    @Transactional
-//    @R
+    @Transactional
+    public User getuserinfo(int userid)
+    {
+        User user = userRepository.findAllById(userid);
+//        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+//        List<String> amap = new ArrayList<>();
+//        amap.add(user.getUsername());
+//        amap.add(String.valueOf(user.getId()));
+//        amap.add(user.getSex());
+//        amap.add(user.getPhone());
+//        amap.add(user.getEmail());
+//        amap.add(user.getDescription());
+//        amap.add(sdf.format(user.getBirthday()));
+//        amap.add(String.valueOf(user.getMoney()));
+//        amap.add(user.getIdentification());
+//        amap.add(user.getRegister_time());
+//        amap.add(String.valueOf(user.getRent_num()));
 
+
+
+        return user;
+    }
 }
