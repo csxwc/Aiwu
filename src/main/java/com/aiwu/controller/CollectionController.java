@@ -25,10 +25,9 @@ public class CollectionController {
     }
 
     @RequestMapping("/iscollected")
-    public Boolean isCollected(@RequestParam Integer uid, @RequestParam Integer hid) {
+    public Boolean isCollected(@RequestParam Map map) {
 
-        //return collectionService.isCollected((Integer)map.get("user_id"), (Integer)map.get("house_id"));
-        return collectionService.isCollected(uid, hid);
+        return collectionService.isCollected((Integer)map.get("user_id"), (Integer)map.get("house_id"));
     }
 
     @RequestMapping("/add")
