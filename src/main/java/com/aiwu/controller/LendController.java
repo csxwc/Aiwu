@@ -37,6 +37,7 @@ public class LendController {
     {
         House house = new House((String)map.get("jingdu"),(String)map.get("weidu"),(String)map.get("name"),(String)map.get("province"),(String)map.get("city"),(String)map.get("type"),(int)map.get("guest"),(int)map.get("room"),(int)map.get("bed"),(int)map.get("toilet"),(String)map.get("introduction"),"暂无",(int)map.get("price"));
         lentService.putinfo(house,(int)map.get("personid"));
+        
         return "index";
     }
 
