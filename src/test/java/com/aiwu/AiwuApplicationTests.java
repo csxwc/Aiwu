@@ -23,4 +23,9 @@ public class AiwuApplicationTests {
 		System.out.println(houseService.intelligentSelect("成都", (float)0.5, (float)0.5, (float)0.5, (float)0.5));
 	}
 
+	@Test
+	public void testLenskit() {
+			System.out.println(1);
+	}
+
 }
