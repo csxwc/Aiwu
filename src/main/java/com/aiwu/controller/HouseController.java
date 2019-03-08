@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -119,6 +121,76 @@ public class HouseController {
         Gson gson = new Gson();
         String str = gson.toJson(house);
         System.out.println(str);
+    }
+
+
+    @RequestMapping("/count")
+    public void count()
+    {
+        List<String> city  =new ArrayList<>();
+        List<Integer> num = new ArrayList<>();
+        List<House> all = houseRepository.findAll();
+        for(int i=0;i<all.size();i++)
+        {
+            boolean have = false;
+            for(int k=0;k<city.size();k++)
+                if(city.get(k).equals(all.get(i).getCity()))
+                {
+                    have = true;
+                    break;
+                }
+            if(have==false)
+            {
+                city.add(all.get(i).getCity());
+                num.add(0);
+            }
+        }
+        System.out.println(city.size());
+        System.out.println(num.size());
+        for(int i=0;i<all.size();i++)
+        {
+            String acity = all.get(i).getCity();
+            for(int j=0;j<city.size();j++)
+            {
+                if(city.get(j).equals(acity))
+                {
+                    int t = num.get(j)+1;
+                    num.set(j,t);
+                    break;
+                }
+            }
+
+        }
+        System.out.print("[");
+        for(int i =0;i<num.size();i++)
+        {
+
+            if(num.get(i)>60)
+            {
+                System.out.print("'"+city.get(i)+"',");
+                //System.out.println(num.get(i));
+            }
+
+        }
+        System.out.println("]");
+
+        System.out.print("[");
+        for(int i =0;i<num.size();i++) {
+            if (num.get(i) > 60) {
+
+                float sum=0;
+                for (int j = 0; j < all.size(); j++) {
+                    if (all.get(j).getCity().equals(city.get(i))) {
+                        sum += all.get(j).getBooktime();
+                    }
+                }
+                    System.out.print( sum+ ",");
+
+
+            }
+
+        }
+        System.out.print("]");
     }
 
 
