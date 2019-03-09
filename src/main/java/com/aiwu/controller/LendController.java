@@ -24,6 +24,7 @@ public class LendController {
     @RequestMapping("/getlend")
     public String getall(@RequestBody Map map)
     {
+        
         List<Map<String,String>> list = lentService.getlend((int)map.get("userid"));
         Gson gson = new Gson();
         String str = gson.toJson(list);
