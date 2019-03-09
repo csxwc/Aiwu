@@ -28,8 +28,8 @@ public class RentController {
     private UserRepository userRepository;
 
     @RequestMapping("/torent")
-    public void torent(int houseid,int userid,Date startdate,Date enddate) throws ParseException {
-        rentService.rent(houseid,userid,startdate,enddate);
+    public void torent(@RequestBody Map map) throws ParseException {
+        rentService.rent((int)map.get("houseid"),(int)map.get("userid"),(Date)map.get("startdate"),(Date)map.get("enddate"));
     }
 
 
@@ -53,9 +53,9 @@ public class RentController {
 
     @RequestMapping("/getusedate")
     //public List<Map<String,Date>> getusedate(@RequestBody Map map)
-    public String getusedate()
+    public String getusedate(@RequestBody Map map)
     {
-        List<Map<String,String>> list = rentService.getusedate(1);
+        List<Map<String,String>> list = rentService.getusedate((int)map.get("houseid"));
         Gson gson = new Gson();
         String str = gson.toJson(list);
         System.out.println("=========================");

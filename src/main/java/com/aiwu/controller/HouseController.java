@@ -113,9 +113,9 @@ public class HouseController {
 
 
     @RequestMapping("/getallinfo")
-    public void getallinfo()
+    public void getallinfo(@RequestBody Map map)
     {
-        House house = houseRepository.findAllById(280746);
+        House house = houseRepository.findAllById((int)map.get("houseid"));
         Gson gson = new Gson();
         String str = gson.toJson(house);
         System.out.println(str);
