@@ -202,7 +202,48 @@ public class RentService {
         return finallist;
     }
 
+    @Transactional
+    public boolean isrent(int houseid) throws ParseException {
+        List<Rent> all = rentRepository.findAll();
+        House house = houseRepository.findAllById(houseid);
+        boolean isrent =false;
+        for(int i=0;i<all.size();i++)
+        {
+            if(houseRepository.findAllById(all.get(i).getRoom_id()).getId()==house.getId())
+            {
+                isrent = true;
+                break;
+            }
+        }
+        if(isrent = false)
+        {
+            System.out.print("===============");
+            return false;
+        }
+        else
+        {
+            List<Rent> list = rentRepository.findAllByRoomid(houseid);
+            System.out.println(list.size());
+            isrent = false;
+            Date today = new Date();
+            System.out.println(today);
+            for (int i=0;i<list.size();i++)
+            {
+                Date endday = list.get(i).getEnd();
+                Date startday = list.get(i).getStart();
+                System.out.println(calc_days(endday,today));
+                System.out.println(calc_days(startday,today));
+                if((calc_days(endday,today)<=0)&&(calc_days(startday,today)>=0))
+                {
+                    System.out.println(calc_days(endday,today));
+                    System.out.println(calc_days(startday,today));
+                    isrent = true;
+                }
 
+            }
+            return isrent;
+        }
+    }
 
 
     public int calc_days(Date date1,Date date2) throws ParseException
@@ -215,4 +256,9 @@ public class RentService {
         int days = (int) ((date2.getTime() - date1.getTime()) / (1000*3600*24));
         return days;
     }
+
+
+
+
+
 }

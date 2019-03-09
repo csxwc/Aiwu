@@ -1,5 +1,6 @@
 package com.aiwu.controller;
 
+import com.aiwu.bean.Rent;
 import com.aiwu.bean.User;
 import com.aiwu.repository.UserRepository;
 import com.aiwu.service.RentService;
@@ -29,8 +30,6 @@ public class RentController {
 
     @RequestMapping("/torent")
     public void torent(@RequestBody Map map) throws ParseException {
-
-        
         rentService.rent((int)map.get("houseid"),(int)map.get("userid"),new Date((long)map.get("startdate")),new Date((long)map.get("enddate")));
     }
 
@@ -65,6 +64,16 @@ public class RentController {
         System.out.println("12312");
         return str;
     }
+
+    @RequestMapping("/isrent")
+    public boolean isrent() throws ParseException {
+        boolean a = rentService.isrent(1);
+        //System.out.print(a);
+
+        return a;
+    }
+
+
 
 
 }
