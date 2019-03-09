@@ -66,8 +66,8 @@ public class RentController {
     }
 
     @RequestMapping("/isrent")
-    public boolean isrent() throws ParseException {
-        boolean a = rentService.isrent(1);
+    public boolean isrent(@RequestBody Map map) throws ParseException {
+        boolean a = rentService.isrent((int)map.get("houseid"));
         //System.out.print(a);
 
         return a;
