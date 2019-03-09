@@ -26,12 +26,12 @@ public class RentController {
     private RentService rentService;
     @Autowired
     private UserRepository userRepository;
-
+    
     @RequestMapping("/torent")
     public void torent(@RequestBody Map map) throws ParseException {
-        rentService.rent((int)map.get("houseid"),(int)map.get("userid"),(Date)map.get("startdate"),(Date)map.get("enddate"));
-    }
 
+        rentService.rent((int)map.get("houseid"),(int)map.get("userid"),new Date((long)map.get("startdate")),new Date((long)map.get("enddate")));
+    }
 
 
     @RequestMapping("/getused")
