@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -200,5 +201,13 @@ public class HouseController {
         System.out.print("]");
     }
 
+    @RequestMapping("/recommend")
+    public String recommend(@RequestParam Integer uid) {
+
+        Gson gson = new Gson();
+        String str = gson.toJson(houseService.mahoutRecommend(uid));
+        return str;
+
+    }
 
 }

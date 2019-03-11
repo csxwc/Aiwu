@@ -4,12 +4,11 @@ import com.aiwu.bean.House;
 import com.aiwu.bean.Picture;
 import com.aiwu.repository.HouseRepository;
 import com.aiwu.repository.PictureRepository;
-import com.aiwu.service.UserService;
+import com.aiwu.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -47,6 +46,17 @@ public class MainController {
     @RequestMapping("/")
     public String index() {
         return "index";
+    }
+
+
+    @Autowired
+    RatingService ratingService;
+
+    @RequestMapping("/t")
+    public void test(@RequestParam Integer uid, @RequestParam Integer hid, @RequestParam int s) {
+
+        ratingService.addRating(uid, hid, s);
+        System.out.println(uid+ " "+ hid+ " "+s);
     }
 
 }

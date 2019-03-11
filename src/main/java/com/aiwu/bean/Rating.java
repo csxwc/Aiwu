@@ -18,8 +18,7 @@ public class Rating {
     private Date updateTime;
 
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     public Integer getUserId() {
