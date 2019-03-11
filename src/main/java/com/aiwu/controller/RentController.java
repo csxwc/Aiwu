@@ -1,8 +1,8 @@
 package com.aiwu.controller;
 
+import com.aiwu.bean.Rent;
 import com.aiwu.bean.User;
 import com.aiwu.repository.UserRepository;
-import com.aiwu.service.RatingService;
 import com.aiwu.service.RentService;
 import com.google.gson.Gson;
 import java.util.Map;
@@ -27,15 +27,11 @@ public class RentController {
     private RentService rentService;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private RatingService ratingService;
 
     @RequestMapping("/torent")
-    public void torent(int houseid,int userid,Date startdate,Date enddate) throws ParseException {
-        rentService.rent(houseid,userid,startdate,enddate);
-        ratingService.addRating(userid, houseid, 10);
+    public void torent(@RequestBody Map map) throws ParseException {
+        rentService.rent((int)map.get("houseid"),(int)map.get("userid"),new Date((long)map.get("startdate")),new Date((long)map.get("enddate")));
     }
-
 
 
     @RequestMapping("/getused")
@@ -57,9 +53,9 @@ public class RentController {
 
     @RequestMapping("/getusedate")
     //public List<Map<String,Date>> getusedate(@RequestBody Map map)
-    public String getusedate()
+    public String getusedate(@RequestBody Map map)
     {
-        List<Map<String,String>> list = rentService.getusedate(1);
+        List<Map<String,String>> list = rentService.getusedate((int)map.get("houseid"));
         Gson gson = new Gson();
         String str = gson.toJson(list);
         System.out.println("=========================");
@@ -68,6 +64,16 @@ public class RentController {
         System.out.println("12312");
         return str;
     }
+
+    @RequestMapping("/isrent")
+    public boolean isrent(@RequestBody Map map) throws ParseException {
+        boolean a = rentService.isrent((int)map.get("houseid"));
+        //System.out.print(a);
+
+        return a;
+    }
+
+
 
 
 }
