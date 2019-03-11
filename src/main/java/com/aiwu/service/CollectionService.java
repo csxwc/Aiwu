@@ -2,7 +2,9 @@ package com.aiwu.service;
 
 import com.aiwu.bean.Collection;
 import com.aiwu.bean.House;
+import com.aiwu.bean.Rating;
 import com.aiwu.repository.CollectionRepository;
+import com.aiwu.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,9 @@ public class CollectionService {
 
     @Autowired
     private CollectionRepository collectionRepository;
+
+    @Autowired
+    private RatingRepository ratingRepository;
 
     @Autowired
     private HouseService houseService;
@@ -51,12 +56,14 @@ public class CollectionService {
 
     }
 
+    @Transactional
     public void addCollection(Integer personId, Integer roomId) {
         Collection collection = new Collection();
         collection.setPerson_id(personId);
         collection.setRoom_id(roomId);
         System.out.println(collection);
         collectionRepository.save(collection);
+
     }
 
     @Transactional

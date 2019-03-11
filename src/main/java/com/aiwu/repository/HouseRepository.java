@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.web.PageableDefault;
@@ -32,4 +33,16 @@ public interface HouseRepository extends CrudRepository<House, String>,JpaReposi
     List<House> findByCityAndRoom(String city,int room);
     List<House> findAllByProvince(String province);
     List<House> findAll();
+
+    @Query("select avg(price) from House where city = ?1 ")
+    Float queryPriceAvg(String city);
+
+    @Query("select min(price) from House where city = ?1 ")
+    Float queryPriceMin(String city);
+
+    @Query("select max(price) from House where city = ?1 ")
+    Float queryPriceMax(String city);
+
+    @Query("select avg(price) from House where city = ?1 and price between ?2 and ?3")
+    Float queryAvgBetween(String city, float min, float max);
 }

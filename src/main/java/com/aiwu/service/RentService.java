@@ -1,8 +1,10 @@
 package com.aiwu.service;
 
 import com.aiwu.bean.House;
+import com.aiwu.bean.Rating;
 import com.aiwu.bean.Rent;
 import com.aiwu.repository.HouseRepository;
+import com.aiwu.repository.RatingRepository;
 import com.aiwu.repository.RentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,9 +22,12 @@ import java.util.*;
 public class RentService {
     @Autowired
     private RentRepository rentRepository;
+
     @Autowired
     private HouseRepository houseRepository;
 
+    @Autowired
+    private RatingRepository ratingRepository;
 
     @Transactional
     public void rent(int houseid,int userid,Date startdate,Date enddate) throws ParseException {
@@ -31,7 +36,6 @@ public class RentService {
         h.setBooktime(h.getBooktime()+1);
         houseRepository.save(h);
         rentRepository.save(r);
-
     }
 
     @Transactional

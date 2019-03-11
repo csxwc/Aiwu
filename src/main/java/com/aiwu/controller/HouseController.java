@@ -1,16 +1,13 @@
 package com.aiwu.controller;
 
 import com.aiwu.bean.House;
-import com.aiwu.bean.Picture;
 import com.aiwu.repository.HouseRepository;
 import com.aiwu.repository.PictureRepository;
 import com.aiwu.service.HouseService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -119,5 +116,17 @@ public class HouseController {
         System.out.println(str);
     }
 
+    //String city, float priceWeight, float heatWeight, float sizeWeight, float comfortable, String...strings
+    @RequestMapping("insel")
+    public String intelligentSelect(@RequestBody Map map) {
+
+         List<House> houses = houseService.intelligentSelect(map.get("city").toString(), (int)map.get("price"),
+                (int)map.get("hot"), (int)map.get("room"), (int)map.get("comfort"), (List<String>) map.get("theme"));
+
+        Gson gson = new Gson();
+        String str = gson.toJson(houses);
+        return str;
+
+    }
 
 }

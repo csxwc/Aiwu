@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class HiveConnector {
 
     private final static String DRIVER="org.apache.hive.jdbc.HiveDriver";
-    private final static String URL="jdbc:hive2://192.168.101.18:10000/djh";
+    private final static String URL="jdbc:hive2://192.168.101.18:10000/default";
     private final static String ROOT="root";
     private final static String PASSWORD="xjtuse";
 

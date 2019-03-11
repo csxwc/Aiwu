@@ -290,7 +290,7 @@ public class HiveTool {
 //        }
         //System.out.println(findList("select sum(pid) from city where city like '%台%'"));
         //System.out.println(findListByEqual("city", "cid", "9"));
-        System.out.println(findHouseIdList("select * from house"));
+        System.out.println(findHouseIdList("select * from house where city like '%成都%' and price between 430.95795 and 530.95795 and booktime between 26 and 50 and (type like '%整%' or type like '%独立房间%' or type like '%合住房间%') and guest-bed < 5"));
 
     }
 

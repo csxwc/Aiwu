@@ -2,6 +2,7 @@ package com.aiwu.controller;
 
 import com.aiwu.bean.User;
 import com.aiwu.repository.UserRepository;
+import com.aiwu.service.RatingService;
 import com.aiwu.service.RentService;
 import com.google.gson.Gson;
 import java.util.Map;
@@ -26,10 +27,13 @@ public class RentController {
     private RentService rentService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RatingService ratingService;
 
     @RequestMapping("/torent")
     public void torent(int houseid,int userid,Date startdate,Date enddate) throws ParseException {
         rentService.rent(houseid,userid,startdate,enddate);
+        ratingService.addRating(userid, houseid, 10);
     }
 
 

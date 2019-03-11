@@ -191,21 +191,28 @@ public class HouseService {
     }
 
 
-    public Integer intelligentSelect(String city, float priceWeight, float heatWeight, float sizeWeight, float comfortable, String...strings) {
+    public List<House> intelligentSelect(String city, int price, int hot, int room, int comfort, List<String> strings) {
+
+
+
+        float priceWeight = price / 100;
+        float heatWeight = hot / 100;
+        float sizeWeight = room / 100;
+        float comfortable = comfort / 100;
 
         StringBuffer match = new StringBuffer();
-        match.append("select hid from house where city = '" + city + "'");
-        //match.append(selectByPriceweight(city, priceWeight));
+        match.append("select * from house where city like '%" + city + "%'");
+        match.append(selectByPriceweight(city, priceWeight));
         match.append(selectByHeatweight(heatWeight));
         match.append(selectBySizeWeight(sizeWeight));
         match.append(selectByComfortable(comfortable));
 
-        for (int i = 0; i < strings.length; i++) {
-            match.append("and desc like '%" + strings[i] + "%'");
+        for (int i = 0; i < strings.size(); i++) {
+            match.append("and desc like '%" + strings.get(i) + "%'");
         }
         System.out.println(match);
         System.out.println(HiveTool.findHouseIdList(match.toString()));
-        return null;
+        return HiveTool.findHouseList(match.toString());
     }
 
     public String selectByComfortable(float comfortable) {
@@ -279,27 +286,51 @@ public class HouseService {
         float realmin = 0;
         float realmax = 0;
 
-        float avg = StatisticsTool.countAvgByCity(city);
-        float max = StatisticsTool.countMaxByCity(city);
-        float min = StatisticsTool.countminByCity(city);
-        float maxavg = StatisticsTool.countAvgBetweenByCity(city, avg, max);
-        float minavg = StatisticsTool.countAvgBetweenByCity(city, min, avg);
+        System.out.println(city);
+        System.out.println(houseRepository);
+
+        float avg = houseRepository.queryPriceAvg(city);
+        float max = houseRepository.queryPriceMax(city);
+        float min = houseRepository.queryPriceMin(city);
+        float maxavg = houseRepository.queryAvgBetween(city, avg, max);
+        float minavg = houseRepository.queryAvgBetween(city, min, avg);
+
+
+//        float avg = StatisticsTool.countAvgByCity(city);
+//        float max = StatisticsTool.countMaxByCity(city);
+//        float min = StatisticsTool.countminByCity(city);
+//        float maxavg = StatisticsTool.countAvgBetweenByCity(city, avg, max);
+//        float minavg = StatisticsTool.countAvgBetweenByCity(city, min, avg);
         float reference = (float) (minavg + (maxavg - minavg) * 0.5);
         float center = (float) minavg + (maxavg - minavg) * (1 - priceWeight);
 
-        float maxrange = max - min;
-        float realrange = (float) maxrange * (1 - priceWeight);
-        realrange *= 0.5;
-        if (100 < realrange) realrange = 100;
+//        float maxrange = max - min;
+//        float realrange = (float) maxrange * (1 - priceWeight);
+//        realrange *= 0.5;
+//        if (realrange < 100) realrange = 100;
+//
+//        if (center < reference) {
+//            realmax = center + realrange / 2 < maxavg ? center + realrange / 2 : maxavg;
+//            realmin = center - (realrange - (realmax - center));
+//            if (realmin < min) realmin = min;
+//        } else {
+//            realmin = center - realrange / 2 > minavg ? center - realrange / 2 : minavg;
+//            realmax = center + (realrange - (center - realmin));
+//
+//        }
 
-        if (center < reference) {
-            realmax = center + realrange / 2 < maxavg ? center + realrange / 2 : maxavg;
-            realmin = center - (realrange - (realmax - center));
-            if (realmin < min) realmin = min;
+        if (priceWeight <= 0.25) {
+            realmin = min;
+            realmax = minavg;
+        } else if (priceWeight < 0.5) {
+            realmin = minavg;
+            realmax = avg;
+        } else if (priceWeight <= 0.75) {
+            realmin = minavg;
+            realmax = maxavg;
         } else {
-            realmin = center - realrange / 2 > minavg ? center - realrange / 2 : minavg;
-            realmax = center + (realrange - (center - realmin));
-
+            realmin = min;
+            realmax = max;
         }
 
         return "and price between " + realmin + " and " + realmax;

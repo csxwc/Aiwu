@@ -20,7 +20,7 @@ public class AiwuApplicationTests {
 
 	@Test
 	public void testselect() {
-		System.out.println(houseService.intelligentSelect("成都", (float)0.5, (float)0.5, (float)0.5, (float)0.5));
+		//System.out.println(houseService.intelligentSelect("成都", (float)0.5, (float)0.5, (float)0.5, (float)0.5));
 	}
 
 	@Test
