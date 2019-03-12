@@ -19,4 +19,6 @@ public interface CollectionRepository extends CrudRepository<Collection, String>
     Collection findByPersonIdAndRoomId(int personId, int roomId);
 
     int deleteById(Integer id);
+
+    Collection findById(Integer id);
 }
