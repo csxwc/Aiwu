@@ -202,10 +202,10 @@ public class HouseController {
     }
 
     @RequestMapping("/recommend")
-    public String recommend(@RequestParam Integer uid) {
+    public String recommend(@RequestBody Map map) {
 
         Gson gson = new Gson();
-        String str = gson.toJson(houseService.mahoutRecommend(uid));
+        String str = gson.toJson(houseService.mahoutRecommend((Integer) map.get("uid")));
         return str;
 
     }

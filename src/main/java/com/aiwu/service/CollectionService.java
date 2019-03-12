@@ -46,6 +46,10 @@ public class CollectionService {
         return finallist;
     }
 
+    public Collection getCollectionById(Integer id) {
+        return collectionRepository.findById(id);
+    }
+
     public Boolean isCollected(Integer userId, Integer houseId) {
 
         Collection collection = collectionRepository.findByPersonIdAndRoomId(userId, houseId);
