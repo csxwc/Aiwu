@@ -3,6 +3,7 @@ package com.aiwu.controller;
 import com.aiwu.bean.House;
 import com.aiwu.repository.HouseRepository;
 import com.aiwu.repository.PictureRepository;
+import com.aiwu.service.DataBaseService;
 import com.aiwu.service.HouseService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,6 +133,10 @@ public class HouseController {
 
     }
 
+
+
+
+
     @RequestMapping("/count")
     public void count()
     {
@@ -209,5 +214,8 @@ public class HouseController {
         return str;
 
     }
+
+
+
 
 }

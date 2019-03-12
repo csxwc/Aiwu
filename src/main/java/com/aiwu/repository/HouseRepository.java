@@ -2,6 +2,7 @@ package com.aiwu.repository;
 
 import com.aiwu.bean.House;
 import com.aiwu.bean.User;
+import com.aiwu.service.HouseService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,6 +18,7 @@ public interface HouseRepository extends CrudRepository<House, String>,JpaReposi
 
     // 关于spring data repository : https://blog.csdn.net/youngsend/article/details/51832581
     // 官方文档 : https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repositories.query-methods.details
+
     House findAllById(int id);
     Page<House> findAllByCity(String city,@PageableDefault(page=0, size=10000)Pageable pageable);
     Page<House> findAllByBedAndCity(int bed,String city,@PageableDefault(page=0, size=10000)Pageable pageable);
@@ -45,4 +47,5 @@ public interface HouseRepository extends CrudRepository<House, String>,JpaReposi
 
     @Query("select avg(price) from House where city = ?1 and price between ?2 and ?3")
     Float queryAvgBetween(String city, float min, float max);
+
 }
