@@ -1,5 +1,6 @@
 package com.aiwu.controller;
 
+import com.aiwu.bean.Picture;
 import com.aiwu.repository.PictureRepository;
 import com.aiwu.service.HouseService;
 import com.aiwu.service.PictureService;
@@ -19,6 +20,8 @@ public class PictureController {
 
     @Autowired
     private PictureService pictureService;
+    @Autowired
+    private  PictureRepository pictureRepository;
 
     @RequestMapping("/getlittle")
     public String getlittle(@RequestBody Map map)
@@ -28,5 +31,12 @@ public class PictureController {
         String str = gson.toJson(list);
         return str;
 
+    }
+
+    @RequestMapping("/num")
+    public int getnum()
+    {
+        List<Picture> list = pictureRepository.findAll();
+        return list.size();
     }
 }

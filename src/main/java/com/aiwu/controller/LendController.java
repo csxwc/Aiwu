@@ -24,6 +24,7 @@ public class LendController {
     @RequestMapping("/getlend")
     public String getall(@RequestBody Map map)
     {
+
         List<Map<String,String>> list = lentService.getlend((int)map.get("userid"));
         Gson gson = new Gson();
         String str = gson.toJson(list);
@@ -33,11 +34,23 @@ public class LendController {
 
     //房主添加住房信息
     @RequestMapping("/addhouse")
-    public String addinfo()
+    public String addinfo(@RequestBody Map map)
     {
-        House house = new House("123","123","test","陕西","咸阳","独立公寓",2,1,2,1,"no","no",150);
-        lentService.putinfo(house,1);
+        House house = new House((String)map.get("jingdu"),(String)map.get("weidu"),(String)map.get("name"),(String)map.get("province"),(String)map.get("city"),(String)map.get("type"),(int)map.get("guest"),(int)map.get("room"),(int)map.get("bed"),(int)map.get("toilet"),(String)map.get("introduction"),"暂无",(int)map.get("price"));
+        lentService.putinfo(house,(int)map.get("personid"));
+
         return "index";
     }
+
+
+//    @RequestMapping("/addhouse")
+//    public String addinfo()
+//    {
+//        System.out.print("1232341234");
+//        House house = new House("123","123","mkk","shanxi","xian","Zhengtao",1,1,1,1,"anjdwnjdnqjwl","暂无",1);
+//        lentService.putinfo(house,1);
+//        System.out.print("============================");
+//        return "index";
+//    }
 
 }

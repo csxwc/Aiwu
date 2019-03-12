@@ -1,7 +1,7 @@
 package com.aiwu.repository;
 
 import com.aiwu.bean.Collection;
-import javolution.io.Struct;
+//import javolution.io.Struct;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;

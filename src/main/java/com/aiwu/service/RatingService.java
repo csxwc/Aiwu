@@ -18,6 +18,7 @@ public class RatingService {
         if (rating != null) {
             rating.setScore(rating.getScore() + score);
         } else {
+            rating = new Rating();
             rating.setUserId(userId);
             rating.setHouseId(houseId);
             rating.setScore(score);

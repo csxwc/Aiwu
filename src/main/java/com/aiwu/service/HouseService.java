@@ -2,9 +2,11 @@ package com.aiwu.service;
 
 import com.aiwu.bean.House;
 import com.aiwu.repository.HouseRepository;
+import com.aiwu.utils.BaseUserRecommender;
 import com.aiwu.utils.HiveTool;
 import com.aiwu.utils.StatisticsTool;
 //import org.apache.hadoop.hive.ql.metadata.Hive;
+import org.apache.mahout.cf.taste.common.TasteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +24,9 @@ public class HouseService {
 
     @Autowired
     private HiveTool hiveTool;
+
+    @Autowired
+    private BaseUserRecommender baseUserRecommender;
 
     @Transactional
     public void InsertHosue(House house)
@@ -219,7 +224,7 @@ public class HouseService {
         int minus = 0;
 
         if (comfortable <= 0.25) {
-            return null;
+            return " ";
         } else if (comfortable <= 0.5) {
             minus = 5;
         } else if (comfortable <= 0.75) {
@@ -337,5 +342,22 @@ public class HouseService {
 
     }
 
+
+    public List<House> mahoutRecommend(Integer userId) {
+        List<House> houses = new ArrayList<House>();
+
+        try {
+            List<Integer> list =  baseUserRecommender.recommendBasedOnUser(userId);
+            for (Integer hid : list) {
+                houses.add(findById(hid));
+            }
+
+        } catch (TasteException e) {
+            e.printStackTrace();
+        }
+
+        return houses;
+
+    }
 
 }
