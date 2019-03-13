@@ -111,13 +111,12 @@ public class HouseController {
 
 
     @RequestMapping("/getallinfo")
-    public String getallinfo(@RequestBody Map map)
+    public void getallinfo(@RequestBody Map map)
     {
         House house = houseRepository.findAllById((int)map.get("houseid"));
         Gson gson = new Gson();
         String str = gson.toJson(house);
-//        System.out.println(str);
-        return str;
+        System.out.println(str);
     }
 
     //String city, float priceWeight, float heatWeight, float sizeWeight, float comfortable, String...strings
@@ -203,10 +202,10 @@ public class HouseController {
     }
 
     @RequestMapping("/recommend")
-    public String recommend(@RequestBody Map map) {
+    public String recommend(@RequestParam Integer uid) {
 
         Gson gson = new Gson();
-        String str = gson.toJson(houseService.mahoutRecommend((int)map.get("uid")));
+        String str = gson.toJson(houseService.mahoutRecommend(uid));
         return str;
 
     }

@@ -16,6 +16,9 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.*;
 
+
+
+
 @Service
 public class HouseService {
 
@@ -27,6 +30,9 @@ public class HouseService {
 
     @Autowired
     private BaseUserRecommender baseUserRecommender;
+
+    @Autowired
+    private DataBaseService dataBaseService;
 
     @Transactional
     public void InsertHosue(House house)
@@ -212,12 +218,26 @@ public class HouseService {
         match.append(selectBySizeWeight(sizeWeight));
         match.append(selectByComfortable(comfortable));
 
+        String keyword = null;
         for (int i = 0; i < strings.size(); i++) {
-            match.append("and desc like '%" + strings.get(i) + "%'");
+            if (strings.get(i).equals("极致性价比"))
+                keyword = "便宜";
+            else if (strings.get(i).equals("方便出行"))
+                keyword = "交通";
+            else if (strings.get(i).equals("舒适生活"))
+                keyword = "舒";
+            else if (strings.get(i).equals("热门景点"))
+                keyword = "景";
+            else if (strings.get(i).equals("畅想美食"))
+                keyword = "食";
+
+            match.append("and introduction like '%" + keyword + "%'");
         }
+        match.append(";");
         System.out.println(match);
-        System.out.println(HiveTool.findHouseIdList(match.toString()));
-        return HiveTool.findHouseList(match.toString());
+        List<House> list = dataBaseService.getAll(match.toString());
+        //System.out.println(HiveTool.findHouseIdList(match.toString()));
+        return list;
     }
 
     public String selectByComfortable(float comfortable) {
