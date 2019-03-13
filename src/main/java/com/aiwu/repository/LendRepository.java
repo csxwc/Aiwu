@@ -9,7 +9,10 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import java.util.List;
+
 public interface LendRepository extends CrudRepository<Lend, String>,JpaRepository<Lend, String>,PagingAndSortingRepository<Lend,String>,JpaSpecificationExecutor<Lend> {
 
     Page<Lend> findAllByPersonId(int personid, Pageable pageable);
+    List<Lend> findAllByPersonId(int personid);
 }

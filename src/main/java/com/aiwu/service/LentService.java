@@ -4,6 +4,7 @@ import com.aiwu.bean.House;
 import com.aiwu.bean.Lend;
 import com.aiwu.repository.HouseRepository;
 import com.aiwu.repository.LendRepository;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -89,8 +90,14 @@ public class LentService {
     @Transactional
     public List<Map<String,String>> getlend(int personid)
     {
+//        System.out.println("===========");
         List<Map<String,String>> finallist = new ArrayList<>();
-        List<Lend> all = getalllent(personid);
+//        System.out.println(personid);
+        List<Lend> all = lendRepository.findAllByPersonId(personid);
+//        String str = new Gson().toJson(all);
+//        System.out.println(str);
+//        System.out.println("28347293648263847");
+//        System.out.println(all.size());
         for(int i=0;i<all.size();i++)
         {
             Map<String,String> amap = new HashMap<>();
@@ -105,6 +112,11 @@ public class LentService {
 
         return finallist;
     }
+
+//    @Transactional
+//    public List<Lend> findById(int id){
+//        return lendRepository.findAllByPersonId(id);
+//    }
 
 
     //房主添加住房信息

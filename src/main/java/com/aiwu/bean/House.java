@@ -55,7 +55,7 @@ public class House {
     private int booktime;
 
     public House(String jingdu, String weidu, String name, String province, String city, String type, Integer guest, Integer room, Integer bed, Integer toilet, String introduction, String picture, float price) {
-        this.id = 12332;
+        this.id = (int)(Math.random()*30000000)+4000000;
         this.jingdu = jingdu;
         this.weidu = weidu;
         this.name = name;

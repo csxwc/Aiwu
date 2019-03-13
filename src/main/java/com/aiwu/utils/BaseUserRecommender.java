@@ -38,8 +38,8 @@ public class BaseUserRecommender {
         //将数据加载到内存中，GroupLensDataModel是针对开放电影评论数据的
         MysqlDataSource dataSource = new MysqlDataSource();
         dataSource.setServerName("localhost");
-        dataSource.setUser("aiwu");
-        dataSource.setPassword("xjtuse");
+        dataSource.setUser("root");
+        dataSource.setPassword("123456");
         dataSource.setDatabaseName("aiwu");
         DataModel dataModel = new MySQLJDBCDataModel(dataSource, "rating", "user_id",
                 "house_id", "score", "update_time");

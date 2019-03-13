@@ -1,6 +1,7 @@
 package com.aiwu.controller;
 
 import com.aiwu.bean.House;
+import com.aiwu.bean.Lend;
 import com.aiwu.service.LentService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/lend")
 public class LendController {
 
@@ -21,16 +22,22 @@ public class LendController {
 
 
     //输出某个人出租的所有房间信息
-    @RequestMapping("/getlend")
+    @RequestMapping("/getlent")
     public String getall(@RequestBody Map map)
     {
-
         List<Map<String,String>> list = lentService.getlend((int)map.get("userid"));
         Gson gson = new Gson();
         String str = gson.toJson(list);
         System.out.println(str);
-        return "index";
+        return str;
     }
+
+//    @RequestMapping("getlend")
+//    public String gettlend(@RequestBody Map map){
+//        List<Lend> list = lentService.findById((int)map.get("userid"));
+//        String str = new Gson().toJson(list);
+//        return str;
+//    }
 
     //房主添加住房信息
     @RequestMapping("/addhouse")
@@ -39,7 +46,7 @@ public class LendController {
         House house = new House((String)map.get("jingdu"),(String)map.get("weidu"),(String)map.get("name"),(String)map.get("province"),(String)map.get("city"),(String)map.get("type"),(int)map.get("guest"),(int)map.get("room"),(int)map.get("bed"),(int)map.get("toilet"),(String)map.get("introduction"),"暂无",(int)map.get("price"));
         lentService.putinfo(house,(int)map.get("personid"));
 
-        return "index";
+        return "success";
     }
 
 
