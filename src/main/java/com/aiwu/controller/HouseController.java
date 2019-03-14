@@ -111,12 +111,13 @@ public class HouseController {
 
 
     @RequestMapping("/getallinfo")
-    public void getallinfo(@RequestBody Map map)
+    public String getallinfo(@RequestBody Map map)
     {
         House house = houseRepository.findAllById((int)map.get("houseid"));
         Gson gson = new Gson();
         String str = gson.toJson(house);
         System.out.println(str);
+        return str;
     }
 
     //String city, float priceWeight, float heatWeight, float sizeWeight, float comfortable, String...strings

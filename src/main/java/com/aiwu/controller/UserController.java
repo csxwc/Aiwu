@@ -58,13 +58,13 @@ public class UserController {
     }
 
     @RequestMapping("/getuserinfo")
-    public void getuserinfo()
+    public String getuserinfo(@RequestBody Map map)
     {
-        User u  =userService.getuserinfo(1);
+        User u  =userService.getuserinfo((int)map.get("userid"));
         Gson gson = new Gson();
         String str = gson.toJson(u);
-        System.out.println(str);
-
+//        System.out.println(str);
+        return str;
     }
 
     @RequestMapping("/register")
